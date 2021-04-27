@@ -1,10 +1,11 @@
-using System;
+using System; 
 using DIKUArcade;
 using DIKUArcade.GUI;
 using DIKUArcade.Input;
+using DIKUArcade.Events;
 
 namespace Breakout {
-    public class Game : DIKUGame {
+    public class Game : DIKUGame, IGameEventProcessor {
         public Game(WindowArgs winArgs) : base(winArgs) {
             window.SetKeyEventHandler(KeyHandler);
         }
@@ -21,6 +22,8 @@ namespace Breakout {
             throw new System.NotImplementedException();
         }
 
+        public void ProcessEvent(GameEvent gameEvent){
 
+        }
     }
 }

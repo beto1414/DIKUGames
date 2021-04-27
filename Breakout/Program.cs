@@ -15,7 +15,7 @@ namespace Breakout
             //game.Run();
 
             loader.reader("level1.txt");
-            loader.printer();
+            loader.printer(loader.map);
             
 
         }

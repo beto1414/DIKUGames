@@ -2,6 +2,9 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using DIKUArcade.Graphics;
+using DIKUArcade.Entities;
+using DIKUArcade.Math;
+
 
 
 namespace LevelLoading {
@@ -12,8 +15,11 @@ namespace LevelLoading {
         public String[] legend;
         public List<LegendReader> listOfLegends;        
 
+        public EntityContainer<Block> blocks; 
         public Loader(){
+            blocks = new EntityContainer<Block> ();    
         }
+
         public void Reader(string file) {
             if(File.Exists(Path.Combine("Assets","Levels",file))) {
                 level = File.ReadAllLines(Path.Combine("Assets","Levels",file));
@@ -21,6 +27,8 @@ namespace LevelLoading {
                 metadata = SplitArray(level,"Meta:","Meta/");
                 legend = SplitArray(level,"Legend:","Legend/");
             }
+        
+
         }
         public void Printer(string[] list){
             foreach(var item in list){
@@ -67,5 +75,38 @@ namespace LevelLoading {
                 //name = new LegendReader(item);
             }
         }
+        
+        public void DrawMap(string[] mapArray) {
+            float positionVarX = 1/12;
+            float positionVarY = 1/25;
+            for(int i = 0; i < mapArray.Length; i++) {
+                var temp = mapArray[i];
+                for(int j = 0; j < 11; j++) {
+                    if(temp[j] != '-') {
+                        Path.Combine("Assets","Images",CharToFile(temp[j]));
+                            blocks.AddEntity(new Block(
+                                new StationaryShape(new Vec2F(positionVarX*j, positionVarY*i), new Vec2F(0.08f, 0.03f)),
+                                    new Image(Path.Combine("Assets","Images",CharToFile(temp[j])))));
+                    }
+                }
+            }
+        }
+
+        public string CharToFile(char c) {
+            foreach(var item in listOfLegends)
+                if (item.character == c)
+                    return item.blockname;
+            return "No file-name with this associated character";
+        }
+
     }
 }
+
+        //      private EntityContainer<Enemy> enemies;
+
+            //  enemies = new EntityContainer<Enemy>(numEnemies);
+
+            //  for (int i = 0; i < numEnemies; i++) {
+            //     enemies.AddEntity(new Enemy(
+            //         new DynamicShape(new Vec2F(0.1f + (float)i * 0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
+            //             new ImageStride(80, images)));

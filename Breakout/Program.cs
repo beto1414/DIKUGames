@@ -17,7 +17,6 @@ namespace Breakout
             loader.reader("level1.txt");
             loader.printer(loader.map);
             
-
         }
     }
 }

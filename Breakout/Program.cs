@@ -9,14 +9,15 @@ namespace Breakout
     {
         static void Main(string[] args)
         {
-            //var winArgs = new WindowArgs(); 
-            //var game = new Game(winArgs);
-            var loader = new Loader();
-            //game.Run();
+            var winArgs = new WindowArgs(); 
+            var game = new Game(winArgs);
+            //var loader = new Loader();
+            game.Run();
 
-            loader.Reader("level1.txt");
-            loader.Printer(loader.map);
+            //loader.Reader("level1.txt");
+            //loader.Printer(loader.map);
             
+
         }
     }
 }

@@ -7,8 +7,8 @@ namespace LevelLoading {
         public string blockname;
         
         public LegendReader(string line) {
-            character = Convert.ToChar(line);
-            blockname = line[3..(line.Length-1)];
+            character = Convert.ToChar(line[0]);
+            blockname = line[3..(line.Length)];
         }
     }
 }

@@ -17,7 +17,8 @@ namespace LevelLoading {
 
         public EntityContainer<Block> blocks; 
         public Loader(){
-            blocks = new EntityContainer<Block> ();    
+            blocks = new EntityContainer<Block> ();
+            listOfLegends = new List<LegendReader> ();
         }
 
         public void Reader(string file) {
@@ -26,16 +27,15 @@ namespace LevelLoading {
                 map = SplitArray(level,"Map:","Map/");
                 metadata = SplitArray(level,"Meta:","Meta/");
                 legend = SplitArray(level,"Legend:","Legend/");
+                AssignChar(legend);
             }
-        
-
         }
         public void Printer(string[] list){
             foreach(var item in list){
                 Console.WriteLine(item.ToString());
             }
         }
-        
+
 ///<summary>
 ///Isolates a string array out of a bigger string array using indexes
 ///</summary>
@@ -68,34 +68,31 @@ namespace LevelLoading {
 ///</param>
         public void AssignChar(string[] leg) {
             foreach(var item in leg){
-                //item.Substring(0);
                 listOfLegends.Add(new LegendReader(item));
-                
-                //Convert.ToChar(item);
-                //name = new LegendReader(item);
             }
         }
-        
-        public void DrawMap(string[] mapArray) {
-            float positionVarX = 1/12;
-            float positionVarY = 1/25;
-            for(int i = 0; i < mapArray.Length; i++) {
-                var temp = mapArray[i];
+
+        public void DrawMap() {
+            float positionVarX = 1.0f/12.0f;
+            float positionVarY = 1.0f/25.0f;
+            for(int i = 0; i < map.Length; i++) {
+                string temp = map[i];
                 for(int j = 0; j < 11; j++) {
                     if(temp[j] != '-') {
-                        Path.Combine("Assets","Images",CharToFile(temp[j]));
-                            blocks.AddEntity(new Block(
-                                new StationaryShape(new Vec2F(positionVarX*j, positionVarY*i), new Vec2F(0.08f, 0.03f)),
-                                    new Image(Path.Combine("Assets","Images",CharToFile(temp[j])))));
+                        blocks.AddEntity(new Block(
+                            new StationaryShape(new Vec2F(positionVarX*j, 1.0f-(positionVarY*i)), new Vec2F(0.08f, 0.03f)),
+                                new Image(Path.Combine("Assets","Images",CharToFile(temp[j])))));
                     }
                 }
             }
         }
 
         public string CharToFile(char c) {
-            foreach(var item in listOfLegends)
-                if (item.character == c)
+            foreach(LegendReader item in listOfLegends) {
+                if (item.character == c) {
                     return item.blockname;
+                }
+            }
             return "No file-name with this associated character";
         }
 

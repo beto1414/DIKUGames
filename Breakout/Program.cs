@@ -21,6 +21,3 @@ namespace Breakout
         }
     }
 }
-//1. instantier en Loader-class
-//2. kald reading-metoden på et level
-//3. print property "level" ud fra Loader-class

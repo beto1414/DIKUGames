@@ -68,6 +68,11 @@ namespace Breakout {
         public float getPos() {
             return shape.Position.X;
         }
+
+        public float getExtent() {
+            return shape.Extent.X;
+        }
+
         ///<summary> Begins movement when left or right key is pressed by calling method. </summary>
         ///<param name ="key"> argument is a given key-input as string </param>
         public void KeyPress(KeyboardKey key) {

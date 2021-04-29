@@ -29,7 +29,7 @@ namespace BreakoutTests {
             int counter = 0;
             foreach (var item in levelNames) {
                 LoadTester.Reader(item);
-                Assert.AreEqual(LoadTester.listofMeta.Length,intList[counter]);
+                Assert.AreEqual(LoadTester.listofMeta.Count,intList[counter]);
                 counter++;
             }
         }
@@ -49,7 +49,6 @@ namespace BreakoutTests {
         [Test]
         public void TestReaderLegends() {
             LoadTester.Reader(levelNames[3]);
-
         }
     }    
 }

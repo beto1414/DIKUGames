@@ -3,9 +3,9 @@ using System;
 
 namespace Breakout.LevelLoading {
     public class MetaReader {
-        string Name;
-        BlockSpecial block;
-        int Time;
+        public string Name;
+        public BlockSpecial block;
+        public int Time;
         
         public MetaReader(string line) {
             switch (line[0..3]) {

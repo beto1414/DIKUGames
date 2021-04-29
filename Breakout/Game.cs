@@ -29,7 +29,7 @@ namespace Breakout {
                 new Image(Path.Combine("Assets","Images","player.png")));
         }
 
-        private void IterateBlocks() {
+        public void IterateBlocks() {
             maploader.blocks.Iterate(block => {
                 if (block.HitPoint == 0) {
                     block.DeleteEntity();

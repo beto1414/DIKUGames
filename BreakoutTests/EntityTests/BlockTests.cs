@@ -39,9 +39,11 @@ namespace BreakoutTests.EntityTests {
         }
         [Test]
         public void BlockDelete () {
-            loader.blocks[2].HitPoint = 0;
+            //loader.blocks.entities[2].HitPoint = 0;
+            loader.blocks.Iterate(block => 
+            block.HitPoint = 0);
             newGame.IterateBlocks();
-            Assert.IsTrue(BlockEntities.Count() == 75);
+            Assert.IsTrue(BlockEntities.CountEntities() == 0);
         }
     }
 }

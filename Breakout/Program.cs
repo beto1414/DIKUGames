@@ -11,13 +11,7 @@ namespace Breakout
         {
             var winArgs = new WindowArgs(); 
             var game = new Game(winArgs);
-            //var loader = new Loader();
             game.Run();
-
-            //loader.Reader("level1.txt");
-            //loader.Printer(loader.map);
-            
-
         }
     }
 }

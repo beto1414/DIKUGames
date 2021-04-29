@@ -14,8 +14,8 @@ namespace LevelLoading {
         public String[] metadata;
         public String[] legend;
         public List<LegendReader> listOfLegends;        
-
         public EntityContainer<Block> blocks; 
+
         public Loader(){
             blocks = new EntityContainer<Block> ();
             listOfLegends = new List<LegendReader> ();
@@ -81,7 +81,7 @@ namespace LevelLoading {
                     if(temp[j] != '-') {
                         blocks.AddEntity(new Block(
                             new StationaryShape(new Vec2F(positionVarX*j, 1.0f-(positionVarY*i)), new Vec2F(0.08f, 0.03f)),
-                                new Image(Path.Combine("Assets","Images",CharToFile(temp[j])))));
+                                new Image(Path.Combine("Assets","Images",CharToFile(temp[j]))), 1));
                     }
                 }
             }
@@ -98,12 +98,3 @@ namespace LevelLoading {
 
     }
 }
-
-        //      private EntityContainer<Enemy> enemies;
-
-            //  enemies = new EntityContainer<Enemy>(numEnemies);
-
-            //  for (int i = 0; i < numEnemies; i++) {
-            //     enemies.AddEntity(new Enemy(
-            //         new DynamicShape(new Vec2F(0.1f + (float)i * 0.1f, 0.9f), new Vec2F(0.1f, 0.1f)),
-            //             new ImageStride(80, images)));

@@ -8,14 +8,12 @@ using DIKUArcade.Input;
 
 namespace Breakout {
     public class Player : IGameEventProcessor {
-
         private Entity entity;
         private DynamicShape shape;
         private GameEventBus eventBus;
         private const float MOVEMENT_SPEED = 0.01f;
         private float moveRight = 0.0f;  
         private float moveLeft = 0.0f;
-
         public Player(DynamicShape shape, IBaseImage image) {
             entity = new Entity(shape, image);
             this.shape = shape;
@@ -26,17 +24,14 @@ namespace Breakout {
             eventBus.Subscribe(GameEventType.InputEvent, this);
 
         }
-
         ///<summary> Renders the player </summary>
         public void Render() {
             entity.RenderEntity();
         }
-
         ///<summary> Updates which diretion player should move. - is left and + is right </summary>
         private void UpdateDirection() {
             shape.Direction.X = (moveLeft + moveRight);
         }
-        
         ///<summary> Sets moveLeft to movementspeed and 0 depending on boolean
         ///value. Calls method to update the direction of the player after setting. </summary>
         ///<param name = "val"> a boolean whether player should move or not </param>.
@@ -49,7 +44,6 @@ namespace Breakout {
                 UpdateDirection();
             }
         }
-        
         ///<summary> Sets moveRight to positive value of MOVEMENT_SPEED or 0 and updates the direction
         ///accordingly to boolean value </summary>
         ///<param name="val"> a boolean whether player should move or not </param>
@@ -62,7 +56,6 @@ namespace Breakout {
                 UpdateDirection();
             }    
         }
-
         ///<summary> Moves the player </summary>
         public void Move() {
             var x = shape.Position.X;
@@ -71,12 +64,10 @@ namespace Breakout {
                 shape.Move();
             }
         }
-
         ///<returns> X-position of player </returns>
         public float getPos() {
             return shape.Position.X;
         }
-
         ///<summary> Begins movement when left or right key is pressed by calling method. </summary>
         ///<param name ="key"> argument is a given key-input as string </param>
         public void KeyPress(KeyboardKey key) {
@@ -91,16 +82,10 @@ namespace Breakout {
                     break;
             }
         }
-
         ///<summary> stops movement or closes the game </summary>
         ///<param name="key"> string as a key on the keyboard </param>
         public void KeyRelease(KeyboardKey key) {
             switch (key) {
-                // case "KEY_ESCAPE":
-                //     eventBus.RegisterEvent(
-                //     GameEventFactory<object>.CreateGameEventForAllProcessors(
-                //     GameEventType.WindowEvent, this, "CLOSE_WINDOW", "", ""));
-                //     break;
                 case KeyboardKey.Left:
                     SetMoveLeft(false);
                     break;
@@ -109,25 +94,10 @@ namespace Breakout {
                     break;
                 default:
                     break;
-                
             }
         }
-
         ///<summary> Check if a key is pressed or released and acts accordingly 
         ///using KeyPress or KeyRelease</summary>
-        public void ProcessEvent(GameEvent gameEvent) {
-            // switch (gameEvent.Message) {
-            //     case "KeyboardAction.KeyPress":
-            //         KeyPress();
-            //         //KeyPress(gameEvent.ObjectArg1);
-            //         break;
-            //     case "KeyboardAction.KeyRelease":
-            //         //KeyRelease(KeyboardKey.Right);
-            //         break;
-            //     default:
-            //         break;
-
-            
-        }
+        public void ProcessEvent(GameEvent gameEvent) {}
     }
 }

@@ -9,22 +9,13 @@ namespace LevelLoading {
 
         public Shape shape;
         public IBaseImage image;
-        public int HealthPoint;
+        public int HitPoint;
 
 
-        public Block (Shape Shape, IBaseImage Image) 
+        public Block (Shape Shape, IBaseImage Image, int Health) 
             : base (Shape, Image) {
-                HealthPoint = 1;
-
+                HitPoint = Health;
             }
+        
     }
 }
-
-    // public class Enemy : Entity {
-    //     public Shape shape {get; set;}
-    //     public IBaseImage image {get;set;}
-    //     public int hitpoints = 3;
-    //     public Enemy(DynamicShape Shape, IBaseImage Image)
-    //         : base(Shape, Image) {}
-    //     public DynamicShape AsDynamicShape() {
-    //         return shape.AsDynamicShape();

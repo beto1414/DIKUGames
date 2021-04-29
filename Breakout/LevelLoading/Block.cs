@@ -4,7 +4,7 @@ using DIKUArcade.Graphics;
 
 
 
-namespace LevelLoading {
+namespace Breakout.LevelLoading {
     public class Block : Entity {
 
         public Shape shape;

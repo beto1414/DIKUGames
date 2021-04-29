@@ -1,6 +1,6 @@
 ﻿using System;
 using DIKUArcade.GUI;
-using LevelLoading;
+using Breakout.LevelLoading;
 using System.Collections.Generic;
 
 namespace Breakout

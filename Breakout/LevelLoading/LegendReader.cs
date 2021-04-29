@@ -1,6 +1,6 @@
 using System;
 
-namespace LevelLoading {
+namespace Breakout.LevelLoading {
     public class LegendReader {
 
         public Char character;

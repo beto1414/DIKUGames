@@ -1,7 +1,6 @@
 using NUnit.Framework;
 using Breakout;
 using Breakout.LevelLoading;
-using LevelLoading;
 using System;
 using System.Collections.Generic;
 
@@ -10,9 +9,9 @@ namespace BreakoutTests {
     public class LevelloadingTests {
         Loader LoadTester;
         String[] levelNames;
-        Int[] intList;
+        int[] intList;
 
-        [Setup]
+        [SetUp]
         public void SettingUp(){
             LoadTester = new Loader();
             levelNames = new String[] {"central-mass.txt", "columns.txt",
@@ -20,12 +19,13 @@ namespace BreakoutTests {
             }
         [Test]
         public void MetaTest_0() {
-            LoaderTester.Reader("level1");
-            Assert.AreEqual(LoaderTester.listofMeta[0].name,"LEVEL 1");
+            LoadTester.Reader("level1");
+            Assert.AreEqual(LoadTester.listofMeta[0].Name,"LEVEL 1");
+
         }
         [Test]
         public void MetaTest_1() {
-            intList = new Int[] {1,1,4,3,4,1};
+            intList = new int[] {1,1,4,3,4,1};
             int counter = 0;
             foreach (var item in levelNames) {
                 LoadTester.Reader(item);

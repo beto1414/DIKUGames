@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using DIKUArcade.Graphics;
 using DIKUArcade.Entities;
 using DIKUArcade.Math;
+using Breakout;
 
 
 
-namespace LevelLoading {
+namespace Breakout.LevelLoading {
     public class Loader {
         public String[] level;
         public String[] map; 

@@ -5,7 +5,7 @@ using DIKUArcade;
 using DIKUArcade.GUI;
 using DIKUArcade.Input;
 using DIKUArcade.Events;
-using LevelLoading;
+using Breakout.LevelLoading;
 using DIKUArcade.Entities;
 using DIKUArcade.Math; 
 using DIKUArcade.Graphics;

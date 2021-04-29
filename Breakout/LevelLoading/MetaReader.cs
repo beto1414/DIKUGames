@@ -1,6 +1,7 @@
 using System;
 
-namespace LevelLoading {
+
+namespace Breakout.LevelLoading {
     public class MetaReader {
         string Name;
         BlockSpecial block;

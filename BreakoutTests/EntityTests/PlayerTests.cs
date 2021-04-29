@@ -1,7 +1,14 @@
 using NUnit.Framework;
 using Breakout;
+using DIKUArcade.Entities;
+using DIKUArcade.Math;
+using DIKUArcade.Graphics;
+using System;
+using System.IO;
 
-namespace EntityTests {
+
+namespace BreakoutTests.EntityTests {
+    [TestFixture]
     public class PlayerTests {
         private Player player;
         
@@ -18,21 +25,21 @@ namespace EntityTests {
 
         [Test]
         public void TestMoveRight() {
-            SetMoveRight(true);
+            player.SetMoveRight(true);
             player.Move();
             Assert.IsTrue(player.getPos() == 0.51f);
         }
 
         [Test]
         public void TestMoveLeft() {
-            SetMoveLeft(true);
+            player.SetMoveLeft(true);
             player.Move();
             Assert.IsTrue(player.getPos() == 0.49f);
         }
 
         [Test]
         public void TestMoveOutOfBoundsRight() {
-            SetMoveRight(true);
+            player.SetMoveRight(true);
             for (int i = 0; i < 100; i++) {
                 player.Move();
             }
@@ -41,7 +48,7 @@ namespace EntityTests {
 
         [Test]
         public void TestMoveOutOfBoundsLeft() {
-            SetMoveLeft(true);
+            player.SetMoveLeft(true);
             for (int i = 0; i < 100; i++) {
                 player.Move();
             }

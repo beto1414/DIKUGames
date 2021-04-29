@@ -21,6 +21,7 @@ namespace Breakout.LevelLoading {
         public Loader(){
             blocks = new EntityContainer<Block> ();
             listOfLegends = new List<LegendReader> ();
+            listofMeta = new List<MetaReader> (); 
         }
 
         public void Reader(string file) {

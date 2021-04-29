@@ -31,12 +31,3 @@ namespace EntityTests {
     }
 }
 
-/*
-        private void IterateBlocks() {
-            maploader.blocks.Iterate(block => {
-                if (block.HitPoint == 0) {
-                    block.DeleteEntity();
-                }
-            });
-        }
-*/

@@ -8,13 +8,15 @@ namespace LevelLoading {
     public class Block : Entity {
 
         public Shape shape;
-
         public IBaseImage image;
+        public int HealthPoint;
+
 
         public Block (Shape Shape, IBaseImage Image) 
-            : base (Shape, Image) {}
+            : base (Shape, Image) {
+                HealthPoint = 1;
 
-
+            }
     }
 }
 

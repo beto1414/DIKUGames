@@ -4,7 +4,7 @@ using DIKUArcade.Events;
 using DIKUArcade.Math;
 using System.IO;
 using System.Collections.Generic;
-
+using DIKUArcade.Input;
 
 namespace Breakout {
     public class Player : IGameEventProcessor {
@@ -12,8 +12,6 @@ namespace Breakout {
         private Entity entity;
         private DynamicShape shape;
         private GameEventBus eventBus;
-        private IBaseImage playerShotImage;
-
         private const float MOVEMENT_SPEED = 0.01f;
         private float moveRight = 0.0f;  
         private float moveLeft = 0.0f;
@@ -81,12 +79,12 @@ namespace Breakout {
 
         ///<summary> Begins movement when left or right key is pressed by calling method. </summary>
         ///<param name ="key"> argument is a given key-input as string </param>
-        public void KeyPress(string key) {
+        public void KeyPress(KeyboardKey key) {
             switch (key) {
-                case "KEY_LEFT":
+                case KeyboardKey.Left:
                     SetMoveLeft(true);
                     break;
-                case "KEY_RIGHT":
+                case KeyboardKey.Right:
                     SetMoveRight(true);
                     break;
                 default:
@@ -96,17 +94,17 @@ namespace Breakout {
 
         ///<summary> stops movement or closes the game </summary>
         ///<param name="key"> string as a key on the keyboard </param>
-        public void KeyRelease(string key) {
+        public void KeyRelease(KeyboardKey key) {
             switch (key) {
                 // case "KEY_ESCAPE":
                 //     eventBus.RegisterEvent(
                 //     GameEventFactory<object>.CreateGameEventForAllProcessors(
                 //     GameEventType.WindowEvent, this, "CLOSE_WINDOW", "", ""));
                 //     break;
-                case "KEY_LEFT":
+                case KeyboardKey.Left:
                     SetMoveLeft(false);
                     break;
-                case "KEY_RIGHT":
+                case KeyboardKey.Right:
                     SetMoveRight(false);
                     break;
                 default:
@@ -118,12 +116,12 @@ namespace Breakout {
         ///<summary> Check if a key is pressed or released and acts accordingly 
         ///using KeyPress or KeyRelease</summary>
         public void ProcessEvent(GameEvent gameEvent) {
-            switch (gameEvent.StringArg1) {
-                case "KEY_PRESS":
-                    KeyPress(gameEvent.Message);
+            switch (gameEvent.Message) {
+                case "KeyboardAction.KeyPress":
+                    //KeyPress(gameEvent.ObjectArg1);
                     break;
-                case "KEY_RELEASE":
-                    KeyRelease(gameEvent.Message);
+                case "KeyboardAction.KeyRelease":
+                    //KeyRelease(KeyboardKey.Right);
                     break;
                 default:
                     break;

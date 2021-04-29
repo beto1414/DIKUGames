@@ -21,18 +21,18 @@ namespace Breakout {
         public Game(WindowArgs winArgs) : base(winArgs) {
             window.SetKeyEventHandler(KeyHandler);
             eventBus = new GameEventBus();
-            eventBus.InitializeEventBus(new List<GameEventType> {});
+            eventBus.InitializeEventBus(new List<GameEventType> {
+                GameEventType.PlayerEvent});
+            eventBus.Subscribe(GameEventType.PlayerEvent,this);
             maploader = new Loader();
             maploader.Reader("level1.txt");
             maploader.DrawMap();
-            player = new Player(new DynamicShape(new Vec2F(0.5f, 0.05f), new Vec2F(0.20f, 0.05f)), new Image(Path.Combine("Assets","Images","player.png")));
+            player = new Player(new DynamicShape(new Vec2F(0.5f, 0.05f), new Vec2F(0.20f, 0.05f)), 
+                new Image(Path.Combine("Assets","Images","player.png")));
         }
         private void KeyHandler(KeyboardAction action, KeyboardKey key) {
             if(action == KeyboardAction.KeyPress) {
-            switch(key) {
-                default:
-                    break;
-            }
+                player.KeyPress(key);
             }
             else if (action == KeyboardAction.KeyRelease) {
                 switch(key) {
@@ -49,7 +49,7 @@ namespace Breakout {
         }
 
         public void ProcessEvent(GameEvent gameEvent){
-
+            
         }
     }
 }

@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using Breakout;
 using Breakout.LevelLoading;
+using LevelLoading;
 using System;
 using System.Collections.Generic;
 

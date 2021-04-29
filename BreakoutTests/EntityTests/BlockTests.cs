@@ -1,4 +1,4 @@
-/*using NUnit.Framework; 
+using NUnit.Framework; 
 using DIKUArcade.Entities;
 using Breakout;
 
@@ -25,11 +25,9 @@ namespace EntityTests {
         }
         [Test]
         public void BlockDelete () {
-            
-            Assert.IsTrue();
+            newGame.IterateBlocks(BlockEntities);
+            Assert.IsTrue(BlockEntities.Count() == 1);
         }
-
-
     }
 }
 

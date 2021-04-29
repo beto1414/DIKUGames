@@ -13,8 +13,9 @@ namespace LevelLoading {
         public String[] map; 
         public String[] metadata;
         public String[] legend;
-        public List<LegendReader> listOfLegends;        
-        public EntityContainer<Block> blocks; 
+        public List<LegendReader> listOfLegends;
+        public List<MetaReader> listofMeta;
+        public EntityContainer<Block> blocks;
 
         public Loader(){
             blocks = new EntityContainer<Block> ();
@@ -28,6 +29,7 @@ namespace LevelLoading {
                 metadata = SplitArray(level,"Meta:","Meta/");
                 legend = SplitArray(level,"Legend:","Legend/");
                 AssignChar(legend);
+                AssignMeta(metadata);
             }
         }
         public void Printer(string[] list){
@@ -69,6 +71,11 @@ namespace LevelLoading {
         public void AssignChar(string[] leg) {
             foreach(var item in leg){
                 listOfLegends.Add(new LegendReader(item));
+            }
+        }
+        public void AssignMeta(string[] line) {
+            foreach(var item in line) {
+                listofMeta.Add(new MetaReader(item));
             }
         }
 

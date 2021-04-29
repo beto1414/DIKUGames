@@ -35,10 +35,7 @@ namespace Breakout {
                 player.KeyPress(key);
             }
             else if (action == KeyboardAction.KeyRelease) {
-                switch(key) {
-                    default:
-                        break;
-                }
+                player.KeyRelease(key);
             }
         }
         public override void Render() {
@@ -46,6 +43,7 @@ namespace Breakout {
             player.Render();
         }
         public override void Update() {
+            player.Move();
         }
 
         public void ProcessEvent(GameEvent gameEvent){

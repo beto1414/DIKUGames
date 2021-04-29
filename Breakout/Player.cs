@@ -116,17 +116,18 @@ namespace Breakout {
         ///<summary> Check if a key is pressed or released and acts accordingly 
         ///using KeyPress or KeyRelease</summary>
         public void ProcessEvent(GameEvent gameEvent) {
-            switch (gameEvent.Message) {
-                case "KeyboardAction.KeyPress":
-                    //KeyPress(gameEvent.ObjectArg1);
-                    break;
-                case "KeyboardAction.KeyRelease":
-                    //KeyRelease(KeyboardKey.Right);
-                    break;
-                default:
-                    break;
+            // switch (gameEvent.Message) {
+            //     case "KeyboardAction.KeyPress":
+            //         KeyPress();
+            //         //KeyPress(gameEvent.ObjectArg1);
+            //         break;
+            //     case "KeyboardAction.KeyRelease":
+            //         //KeyRelease(KeyboardKey.Right);
+            //         break;
+            //     default:
+            //         break;
 
-            }
+            
         }
     }
 }

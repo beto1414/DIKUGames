@@ -17,7 +17,7 @@ namespace BreakoutTests.EntityTests {
         EntityContainer<Block> BlockEntities;
         public Game newGame;
         public Loader loader;
-
+        
 
         [SetUp]
 
@@ -30,7 +30,6 @@ namespace BreakoutTests.EntityTests {
             newGame = new Game(winArgs);
             loader = new Loader();
             loader.Reader("level1.txt"); //76 blocks
-
 
             BlockEntities = new EntityContainer<Block> ();
             BlockEntities.AddEntity(BlockTesting1);

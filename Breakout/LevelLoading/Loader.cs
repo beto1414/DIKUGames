@@ -21,12 +21,17 @@ namespace Breakout.LevelLoading {
         public Loader(){
             blocks = new EntityContainer<Block> ();
             listOfLegends = new List<LegendReader> ();
-            listofMeta = new List<MetaReader> (); 
+            listofMeta = new List<MetaReader> ();
+            level = new String[] {};
+            map = new String[] {};
+            metadata = new String[] {};
+            legend = new String[] {};
+            
         }
 
         public void Reader(string file) {
-            if(File.Exists(Path.Combine("Assets","Levels",file))) {
-                level = File.ReadAllLines(Path.Combine("Assets","Levels",file));
+            if(File.Exists(file)) {
+                level = File.ReadAllLines(file);
                 map = SplitArray(level,"Map:","Map/");
                 metadata = SplitArray(level,"Meta:","Meta/");
                 legend = SplitArray(level,"Legend:","Legend/");

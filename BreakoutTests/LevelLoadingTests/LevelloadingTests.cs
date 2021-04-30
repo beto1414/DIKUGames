@@ -3,48 +3,56 @@ using Breakout;
 using Breakout.LevelLoading;
 using System;
 using System.Collections.Generic;
+using DIKUArcade.GUI;
+using System.IO;
 
-namespace BreakoutTests {
+namespace BreakoutTests.LevelLoadingTests {
     [TestFixture]
     public class LevelloadingTests {
-        Loader LoadTester;
-        String[] levelNames;
+        public Loader LoadTester;
+        public String[] levelNames;
         int[] intList;
+        public WindowArgs winArgs;
 
         [SetUp]
         public void SettingUp(){
+            winArgs = new WindowArgs();
             LoadTester = new Loader();
-            levelNames = new String[] {"central-mass.txt", "columns.txt",
-                "level1.txt","level2.txt","level3.txt","wall.txt"};
-            }
+            levelNames = new String[] {"..\\..\\..\\Assets\\Levels\\central-mass.txt", 
+                "..\\..\\..\\Assets\\Levels\\columns.txt",
+                "..\\..\\..\\Assets\\Levels\\level1.txt",
+                "..\\..\\..\\Assets\\Levels\\level2.txt",
+                "..\\..\\..\\Assets\\Levels\\level3.txt",
+                "..\\..\\..\\Assets\\Levels\\wall.txt"};
+        }
         [Test]
         public void MetaTest_0() {
-            LoadTester.Reader("level1");
-            Assert.AreEqual(LoadTester.listofMeta[0].Name,"LEVEL 1");
-
+            LoadTester.Reader("..\\..\\..\\Assets\\Levels\\level1.txt");
+            Assert.AreEqual(LoadTester.listofMeta.Count, 4);
         }
         [Test]
         public void MetaTest_1() {
             intList = new int[] {1,1,4,3,4,1};
             int counter = 0;
             foreach (var item in levelNames) {
-                LoadTester.Reader(item);
-                Assert.AreEqual(LoadTester.listofMeta.Count,intList[counter]);
+                var LoadTester1 = new Loader();
+                LoadTester1.Reader(item);
+                Assert.AreEqual(LoadTester1.listofMeta.Count,intList[counter]);
                 counter++;
             }
+        }
+        [Test]
+        public void TestReaderMeta() {
+            LoadTester.Reader(levelNames[2]);
+            Assert.IsTrue(LoadTester.metadata[0] == "Name: LEVEL 1");
         }
 
         [Test]
         public void TestReaderMap() {
-            LoadTester.Reader(levelNames[3]);
+            LoadTester.Reader(levelNames[2]);
             Assert.IsTrue(LoadTester.map[4] == "-111----111-");
         }
 
-        [Test]
-        public void TestReaderMeta() {
-            LoadTester.Reader(levelNames[3]);
-            Assert.IsTrue(LoadTester.metadata[0] == "Name: LEVEL 1");
-        }
 
         [Test]
         public void TestReaderLegends() {

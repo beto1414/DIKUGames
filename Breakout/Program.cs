@@ -11,7 +11,11 @@ namespace Breakout
         {
             var winArgs = new WindowArgs(); 
             var game = new Game(winArgs);
+            //var loader = new Loader();
+            //loader.Reader("level1.txt");
+            //Console.WriteLine(loader.listofMeta.Count);
             game.Run();
+
         }
     }
 }

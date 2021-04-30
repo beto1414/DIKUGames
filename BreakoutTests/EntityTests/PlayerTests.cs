@@ -6,15 +6,17 @@ using DIKUArcade.Graphics;
 using System;
 using System.IO;
 using DIKUArcade.Input;
+using DIKUArcade.GUI;
 
 
 namespace BreakoutTests.EntityTests {
     [TestFixture]
     public class PlayerTests {
         private Player player;
-        
+        private WindowArgs winArgs;   
         [SetUp]
         public void SetUp() {
+            winArgs = new WindowArgs();
             player = new Player(new DynamicShape(new Vec2F(0.5f, 0.05f), new Vec2F(0.20f, 0.05f)), 
                 new Image(Path.Combine("Assets","Images","player.png")));
         }
@@ -47,7 +49,7 @@ namespace BreakoutTests.EntityTests {
             for (int i = 0; i < 100; i++) {
                 player.Move();
             }
-            Assert.IsTrue(player.getPos() == (1.0f - player.getExtent()));
+            Assert.IsTrue((player.getPos() - (1.0f - player.getExtent())) < 0.001f);
         }
 
         [Test]
@@ -57,7 +59,7 @@ namespace BreakoutTests.EntityTests {
             for (int i = 0; i < 100; i++) {
                 player.Move();
             }
-            Assert.IsTrue(player.getPos() == (0.0f));
+            Assert.IsTrue((player.getPos() - 0.0f) < 0.001f);
         }
     }
 }

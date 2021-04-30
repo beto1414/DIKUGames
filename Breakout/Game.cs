@@ -20,8 +20,9 @@ namespace Breakout {
             window.SetKeyEventHandler(KeyHandler);
             eventBus = new GameEventBus();
             eventBus.InitializeEventBus(new List<GameEventType> {
-                GameEventType.PlayerEvent});
+                GameEventType.PlayerEvent, GameEventType.WindowEvent});
             eventBus.Subscribe(GameEventType.PlayerEvent,this);
+            eventBus.Subscribe(GameEventType.WindowEvent,this);
             maploader = new Loader();
             maploader.Reader("level1.txt");
             maploader.DrawMap();
@@ -60,6 +61,7 @@ namespace Breakout {
         public override void Update() {
             player.Move();
             IterateBlocks();
+            eventBus.ProcessEvents();
         }
 
         public void ProcessEvent(GameEvent gameEvent){

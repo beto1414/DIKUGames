@@ -22,8 +22,8 @@ namespace BreakoutTests.EntityTests {
             winArgs = new WindowArgs(); 
             newGame = new Game(winArgs);
             newGame.maploader.Reader("..\\..\\..\\Assets\\Levels\\level1.txt"); //76 blocks
-            
         }
+
         [Test]
         public void BlockDelete () {
             newGame.maploader.blocks.Iterate(block => 

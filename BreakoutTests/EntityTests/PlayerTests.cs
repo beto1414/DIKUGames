@@ -14,6 +14,7 @@ namespace BreakoutTests.EntityTests {
     public class PlayerTests {
         private Player player;
         private WindowArgs winArgs;   
+
         [SetUp]
         public void SetUp() {
             winArgs = new WindowArgs();
@@ -28,7 +29,6 @@ namespace BreakoutTests.EntityTests {
 
         [Test]
         public void TestMoveRight() {
-            //player.SetMoveRight(true);
             player.KeyPress(KeyboardKey.Right);
             player.Move();
             Assert.IsTrue(player.getPos() == 0.51f);
@@ -36,7 +36,6 @@ namespace BreakoutTests.EntityTests {
 
         [Test]
         public void TestMoveLeft() {
-            //player.SetMoveLeft(true);
             player.KeyPress(KeyboardKey.Left);
             player.Move();
             Assert.IsTrue(player.getPos() == 0.49f);
@@ -44,7 +43,6 @@ namespace BreakoutTests.EntityTests {
 
         [Test]
         public void TestMoveOutOfBoundsRight() {
-            //player.SetMoveRight(true);
             player.KeyPress(KeyboardKey.Right);
             for (int i = 0; i < 100; i++) {
                 player.Move();
@@ -54,7 +52,6 @@ namespace BreakoutTests.EntityTests {
 
         [Test]
         public void TestMoveOutOfBoundsLeft() {
-            //player.SetMoveLeft(true);
             player.KeyPress(KeyboardKey.Left);
             for (int i = 0; i < 100; i++) {
                 player.Move();

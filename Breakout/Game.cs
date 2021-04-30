@@ -24,11 +24,10 @@ namespace Breakout {
             eventBus.Subscribe(GameEventType.PlayerEvent,this);
             eventBus.Subscribe(GameEventType.WindowEvent,this);
             maploader = new Loader();
-            maploader.Reader("\\Assets\\Levels\\level1.txt");
+            maploader.Reader(Path.Combine("Assets","Levels","level1.txt"));
             maploader.DrawMap();
             
             player = new Player(new DynamicShape(new Vec2F(0.5f, 0.05f), new Vec2F(0.20f, 0.05f)), 
-                //new Image("\\..\\..\\..\\..\\..\\Assets\\Images\\player.png"));
                 new Image(Path.Combine("Assets","Images","player.png")));
         }
 

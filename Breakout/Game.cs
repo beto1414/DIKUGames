@@ -27,7 +27,7 @@ namespace Breakout {
             maploader.Reader(Path.Combine("Assets","Levels","level1.txt"));
             maploader.DrawMap();
             
-            player = new Player(new DynamicShape(new Vec2F(0.5f, 0.05f), new Vec2F(0.20f, 0.05f)), 
+            player = new Player(new DynamicShape(new Vec2F(0.4f, 0.05f), new Vec2F(0.20f, 0.05f)), 
                 new Image(Path.Combine("Assets","Images","player.png")));
         }
 

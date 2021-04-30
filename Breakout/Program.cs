@@ -15,7 +15,6 @@ namespace Breakout
             //loader.Reader("level1.txt");
             //Console.WriteLine(loader.listofMeta.Count);
             game.Run();
-
         }
     }
 }

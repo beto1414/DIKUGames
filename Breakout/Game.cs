@@ -26,9 +26,10 @@ namespace Breakout {
             maploader = new Loader();
             maploader.Reader("\\Assets\\Levels\\level1.txt");
             maploader.DrawMap();
+            
             player = new Player(new DynamicShape(new Vec2F(0.5f, 0.05f), new Vec2F(0.20f, 0.05f)), 
                 //new Image("\\..\\..\\..\\..\\..\\Assets\\Images\\player.png"));
-                new Image(Path.Combine("Assets","Images","ball.png")));
+                new Image(Path.Combine("Assets","Images","player.png")));
         }
 
         public void IterateBlocks() {

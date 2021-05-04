@@ -16,6 +16,5 @@ namespace Breakout.LevelLoading {
             : base (Shape, Image) {
                 HitPoint = Health;
             }
-        
     }
 }

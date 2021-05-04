@@ -9,7 +9,6 @@ using System.IO;
 namespace BreakoutTests.LevelLoadingTests {
     [TestFixture]
     public class LevelloadingTests {
-        //public Loader LoadTester;
         public String[] levelNames;
         int[] intList;
         public WindowArgs winArgs;
@@ -17,7 +16,6 @@ namespace BreakoutTests.LevelLoadingTests {
         [SetUp]
         public void SettingUp(){
             winArgs = new WindowArgs();
-            //LoadTester = new Loader();
             levelNames = new String[] {"..\\..\\..\\Assets\\Levels\\central-mass.txt", 
                 "..\\..\\..\\Assets\\Levels\\columns.txt",
                 "..\\..\\..\\Assets\\Levels\\level1.txt",
@@ -36,7 +34,6 @@ namespace BreakoutTests.LevelLoadingTests {
             intList = new int[] {1,1,4,3,4,1};
             int counter = 0;
             foreach (var item in levelNames) {
-                //var LoadTester1 = new Loader();
                 Loader.Reader(item);
                 Assert.AreEqual(Loader.listofMeta.Count,intList[counter]);
                 counter++;

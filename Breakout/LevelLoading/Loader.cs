@@ -76,13 +76,13 @@ namespace Breakout.LevelLoading {
 ///A string array containing legends
 ///</param>
         public static void AssignChar(string[] leg) {
-            //listOfLegends = new List<LegendReader> ();
+            listOfLegends = new List<LegendReader>();
             foreach(var item in leg){
                 listOfLegends.Add(new LegendReader(item));
             }
         }
         public static void AssignMeta(string[] line) {
-            //listofMeta = new List<MetaReader> ();
+            listofMeta = new List<MetaReader>();
             foreach(var item in line) {
                 listofMeta.Add(new MetaReader(item));
             }

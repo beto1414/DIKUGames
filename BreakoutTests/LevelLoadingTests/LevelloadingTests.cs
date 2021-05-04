@@ -24,7 +24,6 @@ namespace BreakoutTests.LevelLoadingTests {
                 "..\\..\\..\\Assets\\Levels\\level2.txt",
                 "..\\..\\..\\Assets\\Levels\\level3.txt",
                 "..\\..\\..\\Assets\\Levels\\wall.txt"};
-                GLOpen();
         }
         [Test]
         public void MetaTest_0() {

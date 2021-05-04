@@ -25,7 +25,6 @@ namespace BreakoutTests.EntityTests {
             winArgs = new WindowArgs(); 
             newGame = new Game(winArgs);
             Loader.Reader("..\\..\\..\\Assets\\Levels\\level1.txt"); //76 blocks
-            GLOpen();
         }
 
         [Test]

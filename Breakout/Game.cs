@@ -16,7 +16,7 @@ namespace Breakout {
         private GameEventBus eventBus;
         //public Loader maploader;
         private Player player;
-        private EntityContainer<Block> blocks;
+        public EntityContainer<Block> blocks;
         public Game(WindowArgs winArgs) : base(winArgs) {
             window.SetKeyEventHandler(KeyHandler);
             eventBus = new GameEventBus();

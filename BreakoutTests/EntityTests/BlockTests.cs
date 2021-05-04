@@ -15,21 +15,21 @@ namespace BreakoutTests.EntityTests {
         public Block BlockTesting1;
         public Block BlockTesting2;
         public Game newGame;
-        public Loader loader;
+        //public Loader loader;
         public WindowArgs winArgs;
         [SetUp]
         public void SetUp() {
             winArgs = new WindowArgs(); 
             newGame = new Game(winArgs);
-            newGame.maploader.Reader("..\\..\\..\\Assets\\Levels\\level1.txt"); //76 blocks
+            Loader.Reader("..\\..\\..\\Assets\\Levels\\level1.txt"); //76 blocks
         }
 
         [Test]
         public void BlockDelete () {
-            newGame.maploader.blocks.Iterate(block => 
+            newGame.blocks.Iterate(block => 
                   block.HitPoint = 0);
             newGame.IterateBlocks();
-            Assert.IsTrue(newGame.maploader.blocks.CountEntities() == 0);
+            Assert.IsTrue(newGame.blocks.CountEntities() == 0);
 
         }
     }

@@ -10,13 +10,13 @@ using Breakout;
 
 namespace Breakout.LevelLoading {
     public static class Loader {
-        public static String[] level;
-        public static String[] map; 
-        public static String[] metadata;
-        public static String[] legend;
-        public static List<LegendReader> listOfLegends;
-        public static List<MetaReader> listofMeta;
-        public static EntityContainer<Block> blocks;
+        public static String[] level = new String[]{};
+        public static String[] map = new String[]{}; 
+        public static String[] metadata = new String[]{};
+        public static String[] legend = new String[]{};
+        public static List<LegendReader> listOfLegends = new List<LegendReader>();
+        public static List<MetaReader> listofMeta = new List<MetaReader> ();
+        public static EntityContainer<Block> blocks = new EntityContainer<Block> ();
 
         // public Loader(){
         //     blocks = new EntityContainer<Block> ();
@@ -76,11 +76,13 @@ namespace Breakout.LevelLoading {
 ///A string array containing legends
 ///</param>
         public static void AssignChar(string[] leg) {
+            //listOfLegends = new List<LegendReader> ();
             foreach(var item in leg){
                 listOfLegends.Add(new LegendReader(item));
             }
         }
         public static void AssignMeta(string[] line) {
+            //listofMeta = new List<MetaReader> ();
             foreach(var item in line) {
                 listofMeta.Add(new MetaReader(item));
             }

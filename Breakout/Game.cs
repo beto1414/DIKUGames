@@ -14,8 +14,9 @@ using DIKUArcade.Graphics;
 namespace Breakout {
     public class Game : DIKUGame, IGameEventProcessor {
         private GameEventBus eventBus;
-        public Loader maploader;
+        //public Loader maploader;
         private Player player;
+        private EntityContainer<Block> blocks;
         public Game(WindowArgs winArgs) : base(winArgs) {
             window.SetKeyEventHandler(KeyHandler);
             eventBus = new GameEventBus();
@@ -23,16 +24,18 @@ namespace Breakout {
                 GameEventType.PlayerEvent, GameEventType.WindowEvent});
             eventBus.Subscribe(GameEventType.PlayerEvent,this);
             eventBus.Subscribe(GameEventType.WindowEvent,this);
-            maploader = new Loader();
-            maploader.Reader(Path.Combine("Assets","Levels","level1.txt"));
-            maploader.DrawMap();
+            //maploader = new Loader();
+            // maploader.Reader(Path.Combine("Assets","Levels","level1.txt"));
+            // blocks = maploader.DrawMap();
+            Loader.Reader(Path.Combine("Assets","Levels","level1.txt"));
+            blocks = Loader.DrawMap();
             
             player = new Player(new DynamicShape(new Vec2F(0.4f, 0.05f), new Vec2F(0.20f, 0.05f)), 
                 new Image(Path.Combine("Assets","Images","player.png")));
         }
 
         public void IterateBlocks() {
-            maploader.blocks.Iterate(block => {
+            blocks.Iterate(block => {
                 if (block.HitPoint == 0) {
                     block.DeleteEntity();
                 }
@@ -56,7 +59,7 @@ namespace Breakout {
             }
         }
         public override void Render() {
-            maploader.blocks.RenderEntities();
+            blocks.RenderEntities();
             player.Render();
         }
         public override void Update() {

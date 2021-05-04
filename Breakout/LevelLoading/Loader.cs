@@ -9,27 +9,27 @@ using Breakout;
 
 
 namespace Breakout.LevelLoading {
-    public class Loader {
-        public String[] level;
-        public String[] map; 
-        public String[] metadata;
-        public String[] legend;
-        public List<LegendReader> listOfLegends;
-        public List<MetaReader> listofMeta;
-        public EntityContainer<Block> blocks;
+    public static class Loader {
+        public static String[] level;
+        public static String[] map; 
+        public static String[] metadata;
+        public static String[] legend;
+        public static List<LegendReader> listOfLegends;
+        public static List<MetaReader> listofMeta;
+        public static EntityContainer<Block> blocks;
 
-        public Loader(){
-            blocks = new EntityContainer<Block> ();
-            listOfLegends = new List<LegendReader> ();
-            listofMeta = new List<MetaReader> ();
-            level = new String[] {};
-            map = new String[] {};
-            metadata = new String[] {};
-            legend = new String[] {};
+        // public Loader(){
+        //     blocks = new EntityContainer<Block> ();
+        //     listOfLegends = new List<LegendReader> ();
+        //     listofMeta = new List<MetaReader> ();
+        //     level = new String[] {};
+        //     map = new String[] {};
+        //     metadata = new String[] {};
+        //     legend = new String[] {};
             
-        }
+        // }
 
-        public void Reader(string file) {
+        public static void Reader(string file) {
             if(File.Exists(file)) {
                 level = File.ReadAllLines(file);
                 map = SplitArray(level,"Map:","Map/");
@@ -39,7 +39,7 @@ namespace Breakout.LevelLoading {
                 AssignMeta(metadata);
             }
         }
-        public void Printer(string[] list){
+        public static void Printer(string[] list){
             foreach(var item in list){
                 Console.WriteLine(item.ToString());
             }
@@ -60,7 +60,7 @@ namespace Breakout.LevelLoading {
 ///<returns>
 ///Returns the isolated string array
 ///</returns>
-        public string[] SplitArray(string[] text, string textStart, string textEnd) {
+        public static string[] SplitArray(string[] text, string textStart, string textEnd) {
             if (Array.FindIndex(text, row => row.Contains(textStart)) != -1 && Array.FindIndex(text, row => row.Contains(textEnd)) != -1) {
                 return text[(Array.FindIndex(text, row => row.Contains(textStart))+1)..Array.FindIndex(text, row => row.Contains(textEnd))];
             } else {
@@ -75,18 +75,18 @@ namespace Breakout.LevelLoading {
 ///<param name="leg">
 ///A string array containing legends
 ///</param>
-        public void AssignChar(string[] leg) {
+        public static void AssignChar(string[] leg) {
             foreach(var item in leg){
                 listOfLegends.Add(new LegendReader(item));
             }
         }
-        public void AssignMeta(string[] line) {
+        public static void AssignMeta(string[] line) {
             foreach(var item in line) {
                 listofMeta.Add(new MetaReader(item));
             }
         }
 
-        public void DrawMap() {
+        public static EntityContainer<Block> DrawMap() {
             float positionVarX = 1.0f/12.0f;
             float positionVarY = 1.0f/25.0f;
             for(int i = 0; i < map.Length; i++) {
@@ -99,9 +99,10 @@ namespace Breakout.LevelLoading {
                     }
                 }
             }
+            return blocks;
         }
 
-        public string CharToFile(char c) {
+        public static string CharToFile(char c) {
             foreach(LegendReader item in listOfLegends) {
                 if (item.character == c) {
                     return item.blockname;

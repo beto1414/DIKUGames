@@ -14,12 +14,15 @@ namespace BreakoutTests.EntityTests {
     public class PlayerTests {
         private Player player;
         private WindowArgs winArgs;   
-
+        public void GLOpen () {
+            DIKUArcade.GUI.Window.CreateOpenGLContext();
+        }
         [SetUp]
         public void SetUp() {
             winArgs = new WindowArgs();
             player = new Player(new DynamicShape(new Vec2F(0.5f, 0.05f), new Vec2F(0.20f, 0.05f)), 
                 new Image(Path.Combine("Assets","Images","player.png")));
+            GLOpen();
         }
 
         [Test]

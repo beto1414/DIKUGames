@@ -12,7 +12,9 @@ namespace BreakoutTests.LevelLoadingTests {
         public String[] levelNames;
         int[] intList;
         public WindowArgs winArgs;
-
+        public void GLOpen () {
+            DIKUArcade.GUI.Window.CreateOpenGLContext();
+        }
         [SetUp]
         public void SettingUp(){
             winArgs = new WindowArgs();
@@ -22,6 +24,7 @@ namespace BreakoutTests.LevelLoadingTests {
                 "..\\..\\..\\Assets\\Levels\\level2.txt",
                 "..\\..\\..\\Assets\\Levels\\level3.txt",
                 "..\\..\\..\\Assets\\Levels\\wall.txt"};
+                GLOpen();
         }
         [Test]
         public void MetaTest_0() {

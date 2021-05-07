@@ -14,10 +14,6 @@ namespace BreakoutTests.EntityTests {
     public class PlayerTests {
         private Player player;
         private WindowArgs winArgs;   
-        public void GLOpen () {
-            DIKUArcade.GUI.Window.CreateOpenGLContext();
-        }
-
         [SetUp]
         public void SetUp() {
             winArgs = new WindowArgs();

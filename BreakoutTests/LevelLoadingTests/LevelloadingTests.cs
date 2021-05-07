@@ -12,9 +12,6 @@ namespace BreakoutTests.LevelLoadingTests {
         public String[] levelNames;
         int[] intList;
         public WindowArgs winArgs;
-        public void GLOpen () {
-            DIKUArcade.GUI.Window.CreateOpenGLContext();
-        }
         [SetUp]
         public void SettingUp(){
             winArgs = new WindowArgs();

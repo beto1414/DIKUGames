@@ -1,4 +1,4 @@
-using NUnit.Framework;
+    using NUnit.Framework;
 using Breakout;
 using Breakout.LevelLoading;
 using System;
@@ -52,7 +52,8 @@ namespace BreakoutTests.LevelLoadingTests {
 
         [Test]
         public void TestReaderLegends() {
-            Loader.Reader(levelNames[3]);
+            Loader.Reader(levelNames[2]);
+            Assert.IsTrue(Loader.legend[3] == "q) darkgreen-block.png");
         }
     }    
 }

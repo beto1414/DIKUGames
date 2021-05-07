@@ -17,14 +17,13 @@ namespace BreakoutTests.EntityTests {
         public Game newGame;
         //public Loader loader;
         public WindowArgs winArgs;
-        public void GLOpen () {
-            DIKUArcade.GUI.Window.CreateOpenGLContext();
-        }
+
         [SetUp]
         public void SetUp() {
             winArgs = new WindowArgs(); 
             newGame = new Game(winArgs);
             Loader.Reader("..\\..\\..\\Assets\\Levels\\level1.txt"); //76 blocks
+            //Loader.Reader(Path.Combine("Assets","Levels","level1.txt"));
         }
 
         [Test]

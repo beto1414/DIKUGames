@@ -38,6 +38,7 @@ namespace Breakout.LevelLoading {
                 AssignChar(legend);
                 AssignMeta(metadata);
             }
+            else {throw new ArgumentException("404 File not found");}
         }
         public static void Printer(string[] list){
             foreach(var item in list){

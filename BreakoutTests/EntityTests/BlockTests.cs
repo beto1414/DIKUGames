@@ -7,6 +7,7 @@ using DIKUArcade.Graphics;
 using System.IO;
 using System.Collections.Generic;
 using System;
+using System.Reflection;
 using DIKUArcade.GUI;
 
 namespace BreakoutTests.EntityTests {
@@ -22,8 +23,16 @@ namespace BreakoutTests.EntityTests {
         public void SetUp() {
             winArgs = new WindowArgs(); 
             newGame = new Game(winArgs);
-            Loader.Reader("..\\..\\..\\Assets\\Levels\\level1.txt"); //76 blocks
-            //Loader.Reader(Path.Combine("Assets","Levels","level1.txt"));
+            //Loader.Reader("Assets\\Levels\\level1.txt"); //76 blocks
+            DirectoryInfo dir = new DirectoryInfo(Path.GetDirectoryName(
+                        Assembly.GetExecutingAssembly().Location));
+                dir = dir.Parent;
+            var buildDir = 
+            Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var filePath = buildDir + @"Assets/Levels/level1.txt";
+            //Loader.Reader(Path.Combine(dir.FullName.ToString(),"Assets","Levels","level1.txt"));
+            //Loader.Reader("/home/daniel/Documents/Datalogi/Softwareudvikling/Afleveringer/uge8/DIKUGames/BreakoutTests/EntityTests/Assets");
+            Loader.Reader(filePath);
         }
 
         [Test]

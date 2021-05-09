@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using DIKUArcade.Graphics;
 using DIKUArcade.Entities;
 using DIKUArcade.Math;
+using System.Reflection;
 using Breakout;
+using DIKUArcade.Utilities;
 
 
 
@@ -28,17 +30,38 @@ namespace Breakout.LevelLoading {
         //     legend = new String[] {};
             
         // }
+        public static string GetLevelFilePath(string filename) {
+            // Find base path.
+           DirectoryInfo dir = new DirectoryInfo(Path.GetDirectoryName(
+                        Assembly.GetExecutingAssembly().Location));
+
+           while (dir.Name != "bin") {
+                dir = dir.Parent;
+           }
+
+            dir = dir.Parent;
+
+            string path = Path.Combine(dir.FullName.ToString(), "Levels", filename);
+
+            if (!File.Exists(path)) {
+                throw new FileNotFoundException(string.Format($"Error: The file {0} does not exist.", path));
+            }
+
+            return path;
+        }
+
 
         public static void Reader(string file) {
-            if(File.Exists(file)) {
+            //if(File.Exists(FileIO.GetProjectPath(file))) {
+            //if(File.Exists(file)) {
                 level = File.ReadAllLines(file);
                 map = SplitArray(level,"Map:","Map/");
                 metadata = SplitArray(level,"Meta:","Meta/");
                 legend = SplitArray(level,"Legend:","Legend/");
                 AssignChar(legend);
                 AssignMeta(metadata);
-            }
-            else {throw new ArgumentException("404 File not found");}
+            //}
+            //else {throw new ArgumentException("404 File not found");}
         }
         public static void Printer(string[] list){
             foreach(var item in list){

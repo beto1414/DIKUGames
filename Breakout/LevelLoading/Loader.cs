@@ -54,7 +54,9 @@ namespace Breakout.LevelLoading {
         public static void Reader(string file) {
             //if(File.Exists(FileIO.GetProjectPath(file))) {
             //if(File.Exists(file)) {
-                level = File.ReadAllLines(file);
+                string path = Path.Combine(FileIO.GetProjectPath(),file);
+                Console.WriteLine(path); 
+                level = File.ReadAllLines(path);
                 map = SplitArray(level,"Map:","Map/");
                 metadata = SplitArray(level,"Meta:","Meta/");
                 legend = SplitArray(level,"Legend:","Legend/");

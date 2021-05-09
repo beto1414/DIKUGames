@@ -15,16 +15,22 @@ namespace BreakoutTests.LevelLoadingTests {
         [SetUp]
         public void SettingUp(){
             winArgs = new WindowArgs();
-            levelNames = new String[] {"..\\..\\..\\Assets\\Levels\\central-mass.txt", 
-                "..\\..\\..\\Assets\\Levels\\columns.txt",
-                "..\\..\\..\\Assets\\Levels\\level1.txt",
-                "..\\..\\..\\Assets\\Levels\\level2.txt",
-                "..\\..\\..\\Assets\\Levels\\level3.txt",
-                "..\\..\\..\\Assets\\Levels\\wall.txt"};
+            // levelNames = new String[] {"..\\..\\..\\Assets\\Levels\\central-mass.txt", 
+            //     "..\\..\\..\\Assets\\Levels\\columns.txt",
+            //     "..\\..\\..\\Assets\\Levels\\level1.txt",
+            //     "..\\..\\..\\Assets\\Levels\\level2.txt",
+            //     "..\\..\\..\\Assets\\Levels\\level3.txt",
+            //     "..\\..\\..\\Assets\\Levels\\wall.txt"};
+            levelNames = new String[] {Path.Combine("Assets","Levels","central-mass.txt"),
+                Path.Combine("Assets","Levels","columns.txt"),
+                Path.Combine("Assets","Levels","level1.txt"),
+                Path.Combine("Assets","Levels","level2.txt"),
+                Path.Combine("Assets","Levels","level3.txt"),
+                Path.Combine("Assets","Levels","wall.txt")};
         }
         [Test]
         public void MetaTest_0() {
-            Loader.Reader("..\\..\\..\\Assets\\Levels\\level1.txt");
+            Loader.Reader(Path.Combine("Assets","Levels","level1.txt"));
             Assert.AreEqual(Loader.listofMeta.Count, 4);
         }
         

@@ -20,7 +20,9 @@ namespace Breakout.BreakoutStates {
             GameState = false;
         }
         
-        public void ResetState() {}
+        public void ResetState() {
+            Init();
+        }
         public void UpdateState() {}
         public void RenderState() {
             backGroundImage.RenderEntity();
@@ -42,6 +44,10 @@ namespace Breakout.BreakoutStates {
                 }
             }
         public GameRunning() {
+            Init();
+        }
+        //Tilføjer denne funktion således at jeg kan kalde det i constructeren. (Skriv contructeren her)
+        private void Init() {
             Loader.Reader(Path.Combine("Assets","Levels","level1.txt"));
             blocks = Loader.DrawMap();
         }

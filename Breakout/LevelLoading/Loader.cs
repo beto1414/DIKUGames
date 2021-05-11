@@ -20,39 +20,7 @@ namespace Breakout.LevelLoading {
         public static List<MetaReader> listofMeta = new List<MetaReader> ();
         public static EntityContainer<Block> blocks = new EntityContainer<Block> ();
 
-        // public Loader(){
-        //     blocks = new EntityContainer<Block> ();
-        //     listOfLegends = new List<LegendReader> ();
-        //     listofMeta = new List<MetaReader> ();
-        //     level = new String[] {};
-        //     map = new String[] {};
-        //     metadata = new String[] {};
-        //     legend = new String[] {};
-            
-        // }
-        public static string GetLevelFilePath(string filename) {
-            // Find base path.
-           DirectoryInfo dir = new DirectoryInfo(Path.GetDirectoryName(
-                        Assembly.GetExecutingAssembly().Location));
-
-           while (dir.Name != "bin") {
-                dir = dir.Parent;
-           }
-
-            dir = dir.Parent;
-
-            string path = Path.Combine(dir.FullName.ToString(), "Levels", filename);
-
-            if (!File.Exists(path)) {
-                throw new FileNotFoundException(string.Format($"Error: The file {0} does not exist.", path));
-            }
-
-            return path;
-        }
-
-
         public static void Reader(string file) {
-            //if(File.Exists(FileIO.GetProjectPath(file))) {
             //if(File.Exists(file)) {
                 string path = Path.Combine(FileIO.GetProjectPath(),file);
                 Console.WriteLine(path); 

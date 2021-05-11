@@ -14,7 +14,6 @@ using DIKUArcade.Graphics;
 namespace Breakout {
     public class Game : DIKUGame, IGameEventProcessor {
         private GameEventBus eventBus;
-        //public Loader maploader;
         private Player player;
         public EntityContainer<Block> blocks;
         public Game(WindowArgs winArgs) : base(winArgs) {
@@ -24,9 +23,6 @@ namespace Breakout {
                 GameEventType.PlayerEvent, GameEventType.WindowEvent});
             eventBus.Subscribe(GameEventType.PlayerEvent,this);
             eventBus.Subscribe(GameEventType.WindowEvent,this);
-            //maploader = new Loader();
-            // maploader.Reader(Path.Combine("Assets","Levels","level1.txt"));
-            // blocks = maploader.DrawMap();
             Loader.Reader(Path.Combine("Assets","Levels","level1.txt"));
             blocks = Loader.DrawMap();
             

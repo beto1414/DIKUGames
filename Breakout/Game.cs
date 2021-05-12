@@ -25,20 +25,9 @@ namespace Breakout {
             BreakoutBus.GetBus().Subscribe(GameEventType.WindowEvent,this);
             BreakoutBus.GetBus().Subscribe(GameEventType.GameStateEvent,this);
             stateMachine = new StateMachine();
-            // Loader.Reader(Path.Combine("Assets","Levels","level1.txt"));
-            // blocks = Loader.DrawMap();
-            
-            // player = new Player(new DynamicShape(new Vec2F(0.4f, 0.05f), new Vec2F(0.20f, 0.05f)), 
-            //     new Image(Path.Combine("Assets","Images","player.png")));
         }
 
-        // public void IterateBlocks() {
-        //     blocks.Iterate(block => {
-        //         if (block.HitPoint == 0) {
-        //             block.DeleteEntity();
-        //         }
-        //     });
-        // }
+
 
         private void KeyHandler(KeyboardAction action, KeyboardKey key) {
             stateMachine.ActiveState.HandleKeyEvent(action, key);
@@ -59,13 +48,9 @@ namespace Breakout {
         }
         public override void Render() {
             stateMachine.ActiveState.RenderState();
-            // blocks.RenderEntities();
-            // player.Render();
         }
         public override void Update() {
             stateMachine.ActiveState.UpdateState();
-            // player.Move();
-            // IterateBlocks();
             BreakoutBus.GetBus().ProcessEvents();
         }
 

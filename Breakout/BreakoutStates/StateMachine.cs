@@ -7,7 +7,6 @@ namespace Breakout.BreakoutStates {
 
         public StateMachine() {
             BreakoutBus.GetBus().Subscribe(GameEventType.GameStateEvent, this);
-            //BreakoutBus.GetBus().Subscribe(GameEventType.InputEvent, this);
 
             ActiveState = MainMenu.GetInstance();
         }
@@ -32,12 +31,6 @@ namespace Breakout.BreakoutStates {
             if (gameEvent.StringArg2 == "RESET_STATE") {
                 ActiveState.ResetState();
             }
-            // if (gameEvent.EventType == GameEventType.InputEvent) {
-            //     ActiveState.HandleKeyEvent(gameEvent.Message, gameEvent.StringArg1);
-            // }
-            // if (type == GameEventType.InputEvent) {
-            //     ActiveState.HandleKeyEvent(gameEvent.Message, gameEvent.Parameter1);
-            // }
         }
     }      
 }

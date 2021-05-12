@@ -48,22 +48,12 @@ namespace Breakout.BreakoutStates {
                     switch (activeMenuButton) {
                     case 0:
                         BreakoutBus.GetBus().RegisterEvent(
-                        // GameEventFactory<object>.CreateGameEventForAllProcessors(
-                        //     GameEventType.GameStateEvent,
-                        //     this,
-                        //     "CHANGE_STATE",
-                        //     "GAME_RUNNING", ""));
                         new GameEvent{EventType = GameEventType.GameStateEvent,
                             Message = "CHANGE_STATE",
                             StringArg1 = "GAME_RUNNING"});
                         break;
                     case 1:
                         BreakoutBus.GetBus().RegisterEvent(
-                        // GameEventFactory<object>.CreateGameEventForAllProcessors(
-                        //     GameEventType.GameStateEvent,
-                        //     this,
-                        //     "CHANGE_STATE",
-                        //     "MAIN_MENU", ""));
                         new GameEvent{EventType = GameEventType.GameStateEvent,
                             Message = "CHANGE_STATE",
                             StringArg1 = "MAIN_MENU"});
@@ -77,17 +67,15 @@ namespace Breakout.BreakoutStates {
         public GamePaused() {
             backGroundImage = new Entity(
                 new DynamicShape(new Vec2F(0.0f, 0.0f), new Vec2F(1.0f, 1.0f)),
-                new Image(Path.Combine("Assets", "Images", "TitleImage.png")));
-            
-            ResetState();
+                new Image(Path.Combine("Assets", "Images", "shipit_titlescreen.png")));
             
             activeMenuButton = 0;
 
             maxMenuButtons = 2;
 
             menuButtons = new Text[] {
-                new Text("Continue", new Vec2F(0.3f, 0.6f), new Vec2F(0.4f, 0.2f)), 
-                new Text("Main Menu", new Vec2F(0.3f, 0.4f), new Vec2F(0.4f, 0.2f))
+                new Text("Continue", new Vec2F(0.4f, 0.3f), new Vec2F(0.4f, 0.3f)), 
+                new Text("Main Menu", new Vec2F(0.4f, 0.2f), new Vec2F(0.4f, 0.3f))
             };
             
             menuButtons[0].SetColor(System.Drawing.Color.White);

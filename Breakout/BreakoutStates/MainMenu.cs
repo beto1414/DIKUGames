@@ -42,11 +42,6 @@ namespace Breakout.BreakoutStates {
                     switch (activeMenuButton) {
                     case 0:
                         BreakoutBus.GetBus().RegisterEvent(
-                        // GameEventFactory<object>.CreateGameEventForAllProcessors(
-                        //     GameEventType.GameStateEvent,
-                        //     this,
-                        //     "CHANGE_STATE",
-                        //     "GAME_RUNNING", ""));
                             
                             new GameEvent{EventType = GameEventType.GameStateEvent, 
                                 From = this,
@@ -56,8 +51,6 @@ namespace Breakout.BreakoutStates {
                         break;
                     case 1:
                         BreakoutBus.GetBus().RegisterEvent(
-                        // GameEventFactory<object>.CreateGameEventForAllProcessors()
-                        // GameEventType.WindowEvent, this, "CLOSE_WINDOW", "", ""));
                         new GameEvent{EventType = GameEventType.WindowEvent, 
                             Message = "CLOSE_WINDOW"});
                     break;
@@ -71,8 +64,6 @@ namespace Breakout.BreakoutStates {
             backGroundImage = new Entity(
                 new DynamicShape(new Vec2F(0.0f, 0.0f), new Vec2F(1.0f, 1.0f)),
                 new Image(Path.Combine("Assets", "Images", "shipit_titlescreen.png")));
-            
-            ResetState();
             
             activeMenuButton = 0;
 

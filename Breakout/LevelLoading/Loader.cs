@@ -83,6 +83,7 @@ namespace Breakout.LevelLoading {
         }
 
         public static EntityContainer<Block> DrawMap() {
+            blocks.ClearContainer();
             float positionVarX = 1.0f/12.0f;
             float positionVarY = 1.0f/25.0f;
             for(int i = 0; i < map.Length; i++) {

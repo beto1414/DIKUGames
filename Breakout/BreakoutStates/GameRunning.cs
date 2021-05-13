@@ -36,13 +36,14 @@ namespace Breakout.BreakoutStates {
             rand = new System.Random();
             balls = new EntityContainer<Ball>();
             balls.AddEntity(new Ball(new Vec2F(0.5f, 0.1f),new Vec2F(-0.02f,0.01f)));
-            
+            foreach(Ball x in balls) {x.AlignSpeed();}
             //Convert.ToSingle(rand.Next(10)/10)
             
         }
         public void UpdateState() {
-            player.Move();
             IterateBallz();
+            //IterateBlocks();
+            player.Move();
         }
         public void RenderState() { 
             backGroundImage.RenderEntity();
@@ -78,7 +79,7 @@ namespace Breakout.BreakoutStates {
 
         public void IterateBlocks() {
             blocks.Iterate(block => {
-                if (block.HitPoint == 0) {
+                if (block.HitPoint < 10) {
                     block.DeleteEntity();
                 }
             });
@@ -88,14 +89,29 @@ namespace Breakout.BreakoutStates {
             if (dir == CollisionDirection.CollisionDirUp || dir == CollisionDirection.CollisionDirDown) {
                                     return new Vec2F(ball.Shape.AsDynamicShape().Direction.X, 
                                         ball.Shape.AsDynamicShape().Direction.Y*-1);
-            } 
-            if (dir == CollisionDirection.CollisionDirLeft || dir == CollisionDirection.CollisionDirRight) {
+            } else if (dir == CollisionDirection.CollisionDirLeft || dir == CollisionDirection.CollisionDirRight) {
                     return new Vec2F(ball.Shape.AsDynamicShape().Direction.X*-1, 
                         ball.Shape.AsDynamicShape().Direction.Y);
             } else {return new Vec2F(ball.Shape.AsDynamicShape().Direction.X, 
                         ball.Shape.AsDynamicShape().Direction.Y);}
             }
 
+            // if (CollisionDetection.Aabb(ball.Shape.AsDynamicShape(), player.getEntity().Shape).Collision) {
+            //     ball.Shape.AsDynamicShape().ChangeDirection(
+                        // if (player.getEntity().Shape.Position.X < ball.Shape.Position.X) {
+                        //    new Vec2F(ball.Shape.AsDynamicShape().Direction.X, ball.Shape.AsDynamicShape().Direction.Y*-1)
+                        //} else {}
+            // );
+            // }
+//-1,1     -> 
+//Direction
+//-1,1   0,1          1,1
+//        |
+//        |
+//------------------- 1,0
+//        |
+//        |
+//-1,-1  0,-1         1,-1
         ///<summary>
         ///Iterate balls vil tage sig af hvilke positioner forskellige entities har i forhold til hindanden og udfra det
         ///vurdere om to entities kollidere og i det tilfælde ændre balls direction og position.
@@ -109,47 +125,39 @@ namespace Breakout.BreakoutStates {
                 if (ball.Shape.Position.X + ball.Shape.AsDynamicShape().Direction.X <= 0.0f || ball.Shape.Position.X+ball.Shape.Extent.X >= 1.0f) {
                     ball.Shape.AsDynamicShape().ChangeDirection(new Vec2F(ball.Shape.AsDynamicShape().Direction.X*-1,
                         ball.Shape.AsDynamicShape().Direction.Y));
+                    ball.AlignSpeed();
                 } else {
                 blocks.Iterate(block => {
                     if (CollisionDetection.Aabb(ball.Shape.AsDynamicShape(), block.Shape).Collision) { 
-                        block.HitPoint -= 1;
+                        //block.HitPoint -= 1;
                         ball.Shape.AsDynamicShape().ChangeDirection(BounceDirection(
                             CollisionDetection.Aabb(ball.Shape.AsDynamicShape(), block.Shape).CollisionDir, ball));
-                        if(block.HitPoint < 2) { //doesn't remove
-                            block.DeleteEntity();
-                        }  
+                        //ball.AlignSpeed();
+                        //if(block.HitPoint < 2) { //doesn't remove
+                        block.DeleteEntity();
+                        Console.WriteLine(blocks.CountEntities());
+                        //IterateBlocks();
+                        //}  
                     }
                 });}
+                if (CollisionDetection.Aabb(ball.Shape.AsDynamicShape(), player.getEntity().Shape).Collision) {
+                    ball.Shape.AsDynamicShape().ChangeDirection(BounceDirection(
+                        CollisionDetection.Aabb(ball.Shape.AsDynamicShape(), player.getEntity().Shape).CollisionDir, ball));
+                }
             });
         }
     }
 }
-
-                            // switch ("{0}{0}{0}{0}" ball.Shape.Position.X < block.Shape.Position.X, ball.Shape.Position.X > block.Shape.Position.X,
-                            //   ball.Shape.Position.Y < block.Shape.Position.Y, ball.Shape.Position.Y > block.Shape.Position.Y)                                
-//switch ("{0}{0}{0}{0}" ball.Shape.Position.X < block.Shape.Position, ball.Shape.Position.X > block.Shape.Position,
-//   ball.Shape.Position.Y < block.Shape.Position, ball.Shape.Position.Y > block.Shape.Position)
-
-//case "TRUE, TRUE, TRUE, TRUE":
-                            // switch (CollisionDetection.Aabb(ball.Shape.AsDynamicShape(), block.Shape).CollisionDir) {
-                            //     case CollisionDirection.CollisionDirUp :
-                            //         new Vec2F(ball.Shape.AsDynamicShape().Direction.X, 
-                            //             ball.Shape.AsDynamicShape().Direction.Y*-1);
-                            //     break;
-                            //     case CollisionDirection.CollisionDirDown :
-                            //         new Vec2F(ball.Shape.AsDynamicShape().Direction.X,
-                            //             ball.Shape.AsDynamicShape().Direction.Y*-1);
-                            //     break;
-                            //     case CollisionDirection.CollisionDirLeft :
-                            //         new Vec2F(ball.Shape.AsDynamicShape().Direction.X*-1,
-                            //             ball.Shape.AsDynamicShape().Direction.Y);
-                            //     break;                                  
-                            //     case CollisionDirection.CollisionDirRight :
-                            //         new Vec2F(ball.Shape.AsDynamicShape().Direction.X*-1,
-                            //             ball.Shape.AsDynamicShape().Direction.Y);
-                            //     break;
-                            //     case default :
-                            //         ball.Shape.AsDynamicShape().Direction;
-                            //         break;
-                                    
-                            // }
+//if (Collision.Detection.Aabb(ball.Shape.AsDynamicShape(), player.getEntity().Shape).CollisionDir == CollisionDirection.CollisionDirUp || 
+//  Collision.Detection.Aabb(ball.Shape.AsDynamicShape(), player.getEntity().Shape).CollisionDir == CollisionDirection.CollisionDirDown) {
+//  ball.ChangeDiretion(new Vec2F(-ball.Shape.Direction.Y,
+//      (player.getPos()+(player.getExtent()/2.0f)-(ball.Shape.Position.X+(ball.Shape.Extent.X)))*0.1f));
+//}
+//else if (Collision.Detection.Aabb(ball.Shape.AsDynamicShape(), player.getEntity().Shape).CollisionDir == CollisionDirection.CollisionDirUp || 
+//  Collision.Detection.Aabb(ball.Shape.AsDynamicShape(), player.getEntity().Shape).CollisionDir == CollisionDirection.CollisionDirDown) {
+//  ball.ChangeDiretion(new Vec2F(ball.Shape.AsDynamicShape().Direction.X*-1, 
+//      ball.Shape.AsDynamicShape().Direction.Y)));
+// else {
+//  new Vec2F(ball.Shape.AsDynamicShape().Direction.X, 
+//      ball.Shape.AsDynamicShape().Direction.Y    
+//}

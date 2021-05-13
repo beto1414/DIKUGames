@@ -73,6 +73,13 @@ namespace Breakout {
             return shape.Extent.X;
         }
 
+        public DynamicShape getShape() {
+            return shape;
+        }
+
+        public Entity getEntity(){
+            return entity;
+        }
         ///<summary> Begins movement when left or right key is pressed by calling method. </summary>
         ///<param name ="key"> argument is a given key-input as string </param>
         public void KeyPress(KeyboardKey key) {

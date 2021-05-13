@@ -6,6 +6,7 @@ using DIKUArcade.Entities;
 using DIKUArcade.Math;
 using System.Reflection;
 using Breakout;
+using Breakout.Blocks;
 using DIKUArcade.Utilities;
 
 
@@ -19,6 +20,7 @@ namespace Breakout.LevelLoading {
         public static List<LegendReader> listOfLegends = new List<LegendReader>();
         public static List<MetaReader> listofMeta = new List<MetaReader> ();
         public static EntityContainer<Block> blocks = new EntityContainer<Block> ();
+        public static MetaReader normMeta = new MetaReader("                  ");
 
         public static void Reader(string file) {
             //if(File.Exists(file)) {
@@ -38,6 +40,7 @@ namespace Breakout.LevelLoading {
                 Console.WriteLine(item.ToString());
             }
         }
+
 
 ///<summary>
 ///Isolates a string array out of a bigger string array using indexes
@@ -79,10 +82,12 @@ namespace Breakout.LevelLoading {
             listofMeta = new List<MetaReader>();
             foreach(var item in line) {
                 listofMeta.Add(new MetaReader(item));
+                //Console.WriteLine(item[item.Length-1]);
             }
         }
 
         public static EntityContainer<Block> DrawMap() {
+            normMeta.blockType = BlockType.Normal;
             blocks.ClearContainer();
             float positionVarX = 1.0f/12.0f;
             float positionVarY = 1.0f/25.0f;
@@ -90,9 +95,11 @@ namespace Breakout.LevelLoading {
                 string temp = map[i];
                 for(int j = 0; j < 11; j++) {
                     if(temp[j] != '-') {
-                        blocks.AddEntity(new Block(
-                            new StationaryShape(new Vec2F(positionVarX*j, 1.0f-(positionVarY*i)), new Vec2F(0.08f, 0.03f)),
-                                new Image(Path.Combine("Assets","Images",CharToFile(temp[j]))), 1));
+                        // blocks.AddEntity(new Normal(
+                        //     new StationaryShape(new Vec2F(positionVarX*j, 1.0f-(positionVarY*i)), new Vec2F(0.08f, 0.03f)),
+                        //         new Image(Path.Combine("Assets","Images",CharToFile(temp[j])))));
+                        var tempMeta = CharToMetaReader(temp[j]);
+                        blocks.AddEntity(tempMeta.charToBlock(new Vec2F(positionVarX*j, 1.0f-(positionVarY*i))));
                     }
                 }
             }
@@ -106,6 +113,27 @@ namespace Breakout.LevelLoading {
                 }
             }
             return "No file-name with this associated character";
+        }
+
+///<summary>
+///Finds the MetaReader containing the char c (argument) and returns it. If not found, makes a dummy MetaReader
+///containing the char c and the BlockType BlockType.Normal
+///</summary>
+///<param name="c"> 
+///a char. Supposedly a char assigned to a MetaReader in listofMeta by Reader()
+///</param>
+///<returns>
+///a MetaReader from listofMeta if param is found, else a dummy MetaReader
+///</returns>
+        public static MetaReader CharToMetaReader(char c) {
+            foreach(MetaReader item in listofMeta) {
+                if (item.blockChar == c) {
+                    return item;
+                }
+            }
+            //Console.WriteLine("Assigned through else");
+            normMeta.blockChar = c;
+            return normMeta;
         }
 
     }

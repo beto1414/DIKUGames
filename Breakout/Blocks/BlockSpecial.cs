@@ -1,5 +1,5 @@
 
-namespace Breakout.LevelLoading {
+namespace Breakout.Blocks {
     public class BlockSpecial {
         string special;
         char blockSymbol;

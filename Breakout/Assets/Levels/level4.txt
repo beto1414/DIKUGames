@@ -1,14 +1,14 @@
 Map:
 ------------
 ------------
+aaaaaaaaaaaa
+aaaaaaaaaaaa
 ------------
+----bbbb----
+b---bbbb---b
 ------------
-------------
-------------
-------------
-------------
-------------
-------------
+cccccccccccc
+cccccccccccc
 ------------
 ------------
 ------------
@@ -27,8 +27,13 @@ Map/
 
 Meta:
 Name: LEVEL 4
+Invisible: c
+Unbreakable: b
+Normal: a
 Meta/
 
 Legend:
-
+a) red-block.png
+b) orange-block.png
+c) yellow-block.png
 Legend/

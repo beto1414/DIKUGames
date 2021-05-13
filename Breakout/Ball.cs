@@ -27,7 +27,7 @@ namespace Breakout {
             var y = Shape.AsDynamicShape().Direction.Y;
             var c = (Convert.ToSingle(MOVEMENT_SPEED/(Math.Sqrt(Math.Pow(x,2.0) + Math.Pow(y,2.0)))));
             Shape.AsDynamicShape().ChangeDirection(new Vec2F(c*x, c*y));
-            Console.WriteLine(Shape.AsDynamicShape().Direction);
+            //Console.WriteLine(Shape.AsDynamicShape().Direction);
         }
 
 

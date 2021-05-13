@@ -99,7 +99,8 @@ namespace Breakout.BreakoutStates {
             // if (CollisionDetection.Aabb(ball.Shape.AsDynamicShape(), player.getEntity().Shape).Collision) {
             //     ball.Shape.AsDynamicShape().ChangeDirection(
                         // if (player.getEntity().Shape.Position.X < ball.Shape.Position.X) {
-                        //    new Vec2F(ball.Shape.AsDynamicShape().Direction.X, ball.Shape.AsDynamicShape().Direction.Y*-1)
+                        //    new Vec2F(ball.Shape.AsDynamicShape().Direction.X*((ball.Shape.Position.X-player.Shape.Position.X/player.Extent.X/2
+                        //                                                                          )), ball.Shape.AsDynamicShape().Direction.Y*-1)
                         //} else {}
             // );
             // }
@@ -141,23 +142,27 @@ namespace Breakout.BreakoutStates {
                     }
                 });}
                 if (CollisionDetection.Aabb(ball.Shape.AsDynamicShape(), player.getEntity().Shape).Collision) {
-                    ball.Shape.AsDynamicShape().ChangeDirection(BounceDirection(
-                        CollisionDetection.Aabb(ball.Shape.AsDynamicShape(), player.getEntity().Shape).CollisionDir, ball));
+                    // ball.Shape.AsDynamicShape().ChangeDirection(BounceDirection(
+                    //     CollisionDetection.Aabb(ball.Shape.AsDynamicShape(), player.getEntity().Shape).CollisionDir, ball));
+                    if (CollisionDetection.Aabb(ball.Shape.AsDynamicShape(), player.getEntity().Shape).CollisionDir == CollisionDirection.CollisionDirUp) {//} || 
+                        //CollisionDetection.Aabb(ball.Shape.AsDynamicShape(), player.getEntity().Shape).CollisionDir == CollisionDirection.CollisionDirDown) {
+                        //ball.Shape.AsDynamicShape().ChangeDirection(new Vec2F(((ball.Shape.Position.X - player.getPos().X)/player.getExtent()/2.0f)*0.1f,
+                        //((ball.Shape.Position.Y - player.getPos().Y)/player.getExtent()/2.0f)*0.1f));
+                        //ball.AlignSpeed();
+                        ball.Shape.AsDynamicShape().ChangeDirection(
+                            new Vec2F(-(player.getPos().X+(player.getExtent()/2.0f)-(ball.Shape.Position.X+(ball.Shape.Extent.X))), 0.1f));
+                        ball.AlignSpeed();
+                    }
+                    else if (CollisionDetection.Aabb(ball.Shape.AsDynamicShape(), player.getEntity().Shape).CollisionDir == CollisionDirection.CollisionDirLeft || 
+                        CollisionDetection.Aabb(ball.Shape.AsDynamicShape(), player.getEntity().Shape).CollisionDir == CollisionDirection.CollisionDirRight) {
+                        ball.Shape.AsDynamicShape().ChangeDirection(new Vec2F(ball.Shape.AsDynamicShape().Direction.X*-1, 
+                            ball.Shape.AsDynamicShape().Direction.Y));
+                    } else {
+                        ball.Shape.AsDynamicShape().ChangeDirection(new Vec2F(ball.Shape.AsDynamicShape().Direction.X, 
+                        ball.Shape.AsDynamicShape().Direction.Y));   
+                    }
                 }
             });
         }
     }
 }
-//if (Collision.Detection.Aabb(ball.Shape.AsDynamicShape(), player.getEntity().Shape).CollisionDir == CollisionDirection.CollisionDirUp || 
-//  Collision.Detection.Aabb(ball.Shape.AsDynamicShape(), player.getEntity().Shape).CollisionDir == CollisionDirection.CollisionDirDown) {
-//  ball.ChangeDiretion(new Vec2F(-ball.Shape.Direction.Y,
-//      (player.getPos()+(player.getExtent()/2.0f)-(ball.Shape.Position.X+(ball.Shape.Extent.X)))*0.1f));
-//}
-//else if (Collision.Detection.Aabb(ball.Shape.AsDynamicShape(), player.getEntity().Shape).CollisionDir == CollisionDirection.CollisionDirUp || 
-//  Collision.Detection.Aabb(ball.Shape.AsDynamicShape(), player.getEntity().Shape).CollisionDir == CollisionDirection.CollisionDirDown) {
-//  ball.ChangeDiretion(new Vec2F(ball.Shape.AsDynamicShape().Direction.X*-1, 
-//      ball.Shape.AsDynamicShape().Direction.Y)));
-// else {
-//  new Vec2F(ball.Shape.AsDynamicShape().Direction.X, 
-//      ball.Shape.AsDynamicShape().Direction.Y    
-//}

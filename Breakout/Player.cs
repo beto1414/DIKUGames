@@ -11,7 +11,7 @@ namespace Breakout {
         private Entity entity;
         private DynamicShape shape;
         private GameEventBus eventBus;
-        private const float MOVEMENT_SPEED = 0.01f;
+        private const float MOVEMENT_SPEED = 0.04f;
         private float moveRight = 0.0f;  
         private float moveLeft = 0.0f;
         public Player(DynamicShape shape, IBaseImage image) {
@@ -65,8 +65,8 @@ namespace Breakout {
             }
         }
         ///<returns> X-position of player </returns>
-        public float getPos() {
-            return shape.Position.X;
+        public Vec2F getPos() {
+            return shape.Position;
         }
 
         public float getExtent() {

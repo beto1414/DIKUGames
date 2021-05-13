@@ -55,13 +55,21 @@ namespace Breakout.BreakoutStates {
             IterateBallz();
             player.Move();
             if (blocks.CountEntities() - CountUnbreakable() == 0) {
-                counter++;
-                balls.ClearContainer();
-                balls.AddEntity(new Ball(new Vec2F(0.5f, 0.1f),new Vec2F(-0.02f,0.01f)));
-                foreach(Ball x in balls) {x.AlignSpeed();}
-                Loader.Reader(Path.Combine("Assets","Levels",levels[counter]));
-                blocks = Loader.DrawMap();
-                Console.WriteLine("resetting now"); 
+                if (counter < levels.Length-1) {
+                    counter++;
+                    balls.ClearContainer();
+                    balls.AddEntity(new Ball(new Vec2F(0.5f, 0.1f),new Vec2F(-0.02f,0.01f)));
+                    foreach(Ball x in balls) {x.AlignSpeed();}
+                    Loader.Reader(Path.Combine("Assets","Levels",levels[counter]));
+                    blocks = Loader.DrawMap();
+                    Console.WriteLine("resetting now"); 
+                } else {
+                    BreakoutBus.GetBus().RegisterEvent(
+                        new GameEvent{EventType = GameEventType.GameStateEvent, 
+                            From = this,
+                            Message = "CHANGE_STATE",
+                            StringArg1 = "MAIN_MENU"});
+                }
             }
         }
         public int CountUnbreakable(){
@@ -102,6 +110,24 @@ namespace Breakout.BreakoutStates {
                         Message = "CHANGE_STATE",
                         StringArg1 = "GAME_PAUSED"});
                     break;
+                    case KeyboardKey.Q:
+                        if (counter < levels.Length-1) {
+                            counter++;
+                            balls.ClearContainer();
+                            balls.AddEntity(new Ball(new Vec2F(0.5f, 0.1f),new Vec2F(-0.02f,0.01f)));
+                            foreach(Ball x in balls) {x.AlignSpeed();}
+                            Loader.Reader(Path.Combine("Assets","Levels",levels[counter]));
+                            blocks = Loader.DrawMap();
+                        } else {
+                            BreakoutBus.GetBus().RegisterEvent(
+                                new GameEvent{EventType = GameEventType.GameStateEvent, 
+                                    From = this,
+                                    Message = "CHANGE_STATE",
+                                    StringArg1 = "MAIN_MENU"});
+                        }
+                        break;
+                        
+
                 }
             }
             if(KeyAction == KeyboardAction.KeyPress) {

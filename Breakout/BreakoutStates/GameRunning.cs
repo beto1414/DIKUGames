@@ -130,13 +130,6 @@ namespace Breakout.BreakoutStates {
             return GameRunning.instance ?? (GameRunning.instance = new GameRunning());
         }
 
-        public void IterateBlocks() {
-            blocks.Iterate(block => {
-                if (block.HitPoint < 0) {
-                    block.DeleteEntity();
-                }
-            });
-        }
 
         public Vec2F BounceDirection(CollisionDirection dir, Ball ball) {
             if (dir == CollisionDirection.CollisionDirUp || dir == CollisionDirection.CollisionDirDown) {

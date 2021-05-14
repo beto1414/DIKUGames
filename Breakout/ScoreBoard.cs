@@ -1,8 +1,6 @@
 using System; 
 using DIKUArcade.Math;
 using DIKUArcade.Graphics;
-using DIKUArcade.Entities;
-using Breakout.Blocks;
 
 namespace Breakout {
     public class ScoreBoard : Text {

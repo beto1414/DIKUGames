@@ -27,7 +27,7 @@ namespace Breakout.BreakoutStates {
             GameState = false;
         }
         
-        public void ResetState() { //skriv constructoren her
+        public void ResetState() {
             counter = 0;
             Loader.Reader(Path.Combine("Assets","Levels",levels[counter]));
             blocks = Loader.DrawMap();
@@ -70,8 +70,8 @@ namespace Breakout.BreakoutStates {
                 }
             }
             return count;
-
         }
+        
         public void RenderState() { 
             backGroundImage.RenderEntity();
             if (GameState) {player.Render();}
@@ -169,7 +169,7 @@ namespace Breakout.BreakoutStates {
                             CollisionDetection.Aabb(ball.Shape.AsDynamicShape(), block.Shape).CollisionDir, ball));
                         ball.AlignSpeed();  
                     }
-                    if(block.HitPoint <= 0) {
+                    if(block.hitPoint <= 0) {
                         if (!block.unbreakable) {
                             block.DeleteEntity();
                             scoreBoard.AddPoints(block.blockValue);

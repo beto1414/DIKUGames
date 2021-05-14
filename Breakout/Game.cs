@@ -1,15 +1,9 @@
-using System; 
-using System.IO;
 using System.Collections.Generic;
 using DIKUArcade;
 using DIKUArcade.GUI;
 using DIKUArcade.Input;
 using DIKUArcade.Events;
-using Breakout.LevelLoading;
 using Breakout.BreakoutStates;
-using DIKUArcade.Entities;
-using DIKUArcade.Math; 
-using DIKUArcade.Graphics;
 
 
 namespace Breakout {

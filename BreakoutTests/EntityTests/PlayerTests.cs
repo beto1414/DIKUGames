@@ -24,21 +24,21 @@ namespace BreakoutTests.EntityTests {
 
         [Test]
         public void TestGetPos() {
-            Assert.IsTrue(player.getPos() == 0.5f);
+            Assert.IsTrue(player.getPos().X == 0.5f);
         }
 
         [Test]
         public void TestMoveRight() {
             player.KeyPress(KeyboardKey.Right);
             player.Move();
-            Assert.IsTrue(player.getPos() == 0.51f);
+            Assert.IsTrue(player.getPos().X == 0.54f);
         }
 
         [Test]
         public void TestMoveLeft() {
             player.KeyPress(KeyboardKey.Left);
             player.Move();
-            Assert.IsTrue(player.getPos() == 0.49f);
+            Assert.IsTrue(player.getPos().X == 0.46f);
         }
 
         [Test]
@@ -47,7 +47,7 @@ namespace BreakoutTests.EntityTests {
             for (int i = 0; i < 100; i++) {
                 player.Move();
             }
-            Assert.IsTrue((player.getPos() - (1.0f - player.getExtent())) < 0.001f);
+            Assert.IsTrue((player.getPos().X - (1.0f - player.getExtent())) < 0.05f);
         }
 
         [Test]
@@ -56,7 +56,8 @@ namespace BreakoutTests.EntityTests {
             for (int i = 0; i < 100; i++) {
                 player.Move();
             }
-            Assert.IsTrue((player.getPos() - 0.0f) < 0.001f);
+            Console.Write(player.getPos().X);
+            Assert.IsTrue((player.getPos().X - 0.0f) < 0.05f);
         }
     }
 }

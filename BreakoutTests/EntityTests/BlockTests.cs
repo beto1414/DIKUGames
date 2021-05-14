@@ -9,28 +9,31 @@ using System.Collections.Generic;
 using System;
 using System.Reflection;
 using DIKUArcade.GUI;
+using Breakout.BreakoutStates;
+using DIKUArcade.Events;
 
 namespace BreakoutTests.EntityTests {
     [TestFixture]
     public class BlockTests {
-        public Block BlockTesting1;
-        public Block BlockTesting2;
         public Game newGame;
         public WindowArgs winArgs;
+        public GameRunning state;
 
         [SetUp]
         public void SetUp() {
             winArgs = new WindowArgs(); 
             newGame = new Game(winArgs);
+            state = new GameRunning();
             Loader.Reader(Path.Combine("Assets","Levels","level1.txt"));
+            state.blocks = Loader.DrawMap();
         }
 
         [Test]
         public void BlockDelete () {
-            newGame.blocks.Iterate(block => 
-                  block.HitPoint = 0);
-            newGame.IterateBlocks();
-            Assert.IsTrue(newGame.blocks.CountEntities() == 0);
+            state.blocks.Iterate(block => 
+                  block.hitPoint = 0);
+            state.IterateBallz();
+            Assert.IsTrue(state.blocks.CountEntities() == 0);
 
         }
     }

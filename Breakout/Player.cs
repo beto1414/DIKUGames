@@ -1,9 +1,6 @@
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
-using DIKUArcade.Events;
 using DIKUArcade.Math;
-using System.IO;
-using System.Collections.Generic;
 using DIKUArcade.Input;
 
 namespace Breakout {

@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using DIKUArcade.Graphics;
 using DIKUArcade.Entities;
 using DIKUArcade.Math;
-using System.Reflection;
-using Breakout;
 using Breakout.Blocks;
 using DIKUArcade.Utilities;
 
@@ -101,7 +99,7 @@ namespace Breakout.LevelLoading {
         public static string CharToFile(char c) {
             foreach(LegendReader item in listOfLegends) {
                 if (item.character == c) {
-                    return item.blockname;
+                    return item.blockImage;
                 }
             }
             return "No file-name with this associated character";

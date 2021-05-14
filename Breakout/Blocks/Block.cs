@@ -1,4 +1,3 @@
-using System;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 
@@ -7,7 +6,7 @@ namespace Breakout.Blocks {
 
         public Shape shape;
         public IBaseImage image;
-        public int HitPoint;
+        public int hitPoint;
         public bool unbreakable;
         public static bool visible;
         public BlockType blockType;

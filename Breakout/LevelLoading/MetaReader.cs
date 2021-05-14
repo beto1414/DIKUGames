@@ -41,8 +41,6 @@ namespace Breakout.LevelLoading {
                     blockType = BlockType.Invisible;
                     break;
             }
-            //Console.WriteLine(blockName);
-            //Console.WriteLine(line[0..4]);
         }
 
         public Block charToBlock (Vec2F position) {

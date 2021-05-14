@@ -23,17 +23,13 @@ namespace Breakout.LevelLoading {
         public static MetaReader normMeta = new MetaReader("                  ");
 
         public static void Reader(string file) {
-            //if(File.Exists(file)) {
                 string path = Path.Combine(FileIO.GetProjectPath(),file);
-                Console.WriteLine(path); 
                 level = File.ReadAllLines(path);
                 map = SplitArray(level,"Map:","Map/");
                 metadata = SplitArray(level,"Meta:","Meta/");
                 legend = SplitArray(level,"Legend:","Legend/");
                 AssignChar(legend);
                 AssignMeta(metadata);
-            //}
-            //else {throw new ArgumentException("404 File not found");}
         }
         public static void Printer(string[] list){
             foreach(var item in list){
@@ -82,7 +78,6 @@ namespace Breakout.LevelLoading {
             listofMeta = new List<MetaReader>();
             foreach(var item in line) {
                 listofMeta.Add(new MetaReader(item));
-                //Console.WriteLine(item[item.Length-1]);
             }
         }
 
@@ -95,9 +90,6 @@ namespace Breakout.LevelLoading {
                 string temp = map[i];
                 for(int j = 0; j < 11; j++) {
                     if(temp[j] != '-') {
-                        // blocks.AddEntity(new Normal(
-                        //     new StationaryShape(new Vec2F(positionVarX*j, 1.0f-(positionVarY*i)), new Vec2F(0.08f, 0.03f)),
-                        //         new Image(Path.Combine("Assets","Images",CharToFile(temp[j])))));
                         var tempMeta = CharToMetaReader(temp[j]);
                         blocks.AddEntity(tempMeta.charToBlock(new Vec2F(positionVarX*j, 1.0f-(positionVarY*i))));
                     }
@@ -131,7 +123,6 @@ namespace Breakout.LevelLoading {
                     return item;
                 }
             }
-            //Console.WriteLine("Assigned through else");
             normMeta.blockChar = c;
             return normMeta;
         }

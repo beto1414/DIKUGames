@@ -19,7 +19,6 @@ namespace Breakout.BreakoutStates {
         private bool GameState = true;
         private Player player;
         private ScoreBoard scoreBoard;
-        private Random rand;
         public MetaReader normalBlock;
         public string[] levels = new String[]{"level1.txt","level2.txt","level3.txt","level4.txt"};
         public int counter = 0;
@@ -29,26 +28,18 @@ namespace Breakout.BreakoutStates {
         }
         
         public void ResetState() { //skriv constructoren her
-            // normalBlock = new MetaReader (" ");
-            // normalBlock.blockType = BlockType.Normal;
-            //levels = new String[]{"level1.txt","level2.txt","level3.txt","level4.txt"};
             counter = 0;
             Loader.Reader(Path.Combine("Assets","Levels",levels[counter]));
-            Console.WriteLine(counter);
-            Console.WriteLine(levels[counter]);
             blocks = Loader.DrawMap();
             backGroundImage = new Entity(
                 new DynamicShape(new Vec2F(0.0f, 0.0f), new Vec2F(1.0f, 1.0f)),
                 new Image(Path.Combine("Assets", "Images", "SpaceBackground.png")));
             player = new Player(new DynamicShape(new Vec2F(0.4f, 0.05f), new Vec2F(0.20f, 0.05f)), 
                 new Image(Path.Combine("Assets","Images","player.png")));
-            rand = new System.Random();
             balls = new EntityContainer<Ball>();
             balls.AddEntity(new Ball(new Vec2F(0.5f, 0.1f),new Vec2F(-0.02f,0.01f)));
             foreach(Ball x in balls) {x.AlignSpeed();}
             scoreBoard = new ScoreBoard("Score: ",new Vec2F(0.0f,0.6f), new Vec2F(0.4f,0.4f));
-            //counter += 1;
-            //Convert.ToSingle(rand.Next(10)/10)
             
         }
         public void UpdateState() {
@@ -62,7 +53,6 @@ namespace Breakout.BreakoutStates {
                     foreach(Ball x in balls) {x.AlignSpeed();}
                     Loader.Reader(Path.Combine("Assets","Levels",levels[counter]));
                     blocks = Loader.DrawMap();
-                    Console.WriteLine("resetting now"); 
                 } else {
                     BreakoutBus.GetBus().RegisterEvent(
                         new GameEvent{EventType = GameEventType.GameStateEvent, 
@@ -86,7 +76,6 @@ namespace Breakout.BreakoutStates {
             backGroundImage.RenderEntity();
             if (GameState) {player.Render();}
             if (GameState) {scoreBoard.RenderText();} 
-            //if (GameState) {blocks.RenderEntities();}
             if (GameState) {
                 blocks.Iterate(block => {
                     if (block.blockType == BlockType.Invisible) {
@@ -126,8 +115,6 @@ namespace Breakout.BreakoutStates {
                                     StringArg1 = "MAIN_MENU"});
                         }
                         break;
-                        
-
                 }
             }
             if(KeyAction == KeyboardAction.KeyPress) {
@@ -137,7 +124,6 @@ namespace Breakout.BreakoutStates {
 
         public GameRunning() {
             ResetState();
-            //if (counter < 2) ResetState();
         }
 
         public static GameRunning GetInstance () {
@@ -195,17 +181,10 @@ namespace Breakout.BreakoutStates {
                             block.DeleteEntity();
                             scoreBoard.AddPoints(block.blockValue);
                         }
-                        //Console.WriteLine(blocks.CountEntities());
                     }
                 });}
                 if (CollisionDetection.Aabb(ball.Shape.AsDynamicShape(), player.getEntity().Shape).Collision) {
-                    // ball.Shape.AsDynamicShape().ChangeDirection(BounceDirection(
-                    //     CollisionDetection.Aabb(ball.Shape.AsDynamicShape(), player.getEntity().Shape).CollisionDir, ball));
                     if (CollisionDetection.Aabb(ball.Shape.AsDynamicShape(), player.getEntity().Shape).CollisionDir == CollisionDirection.CollisionDirUp) {//} || 
-                        //CollisionDetection.Aabb(ball.Shape.AsDynamicShape(), player.getEntity().Shape).CollisionDir == CollisionDirection.CollisionDirDown) {
-                        //ball.Shape.AsDynamicShape().ChangeDirection(new Vec2F(((ball.Shape.Position.X - player.getPos().X)/player.getExtent()/2.0f)*0.1f,
-                        //((ball.Shape.Position.Y - player.getPos().Y)/player.getExtent()/2.0f)*0.1f));
-                        //ball.AlignSpeed();
                         ball.Shape.AsDynamicShape().ChangeDirection(
                             new Vec2F(-(player.getPos().X+(player.getExtent()/2.0f)-(ball.Shape.Position.X+(ball.Shape.Extent.X))), 0.1f)); //x is the difference between player.pos and ball.pos. y is a constant value
                         ball.AlignSpeed();

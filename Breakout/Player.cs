@@ -7,22 +7,15 @@ using System.Collections.Generic;
 using DIKUArcade.Input;
 
 namespace Breakout {
-    public class Player : IGameEventProcessor {
+    public class Player {
         private Entity entity;
         private DynamicShape shape;
-        private GameEventBus eventBus;
         private const float MOVEMENT_SPEED = 0.04f;
         private float moveRight = 0.0f;  
         private float moveLeft = 0.0f;
         public Player(DynamicShape shape, IBaseImage image) {
             entity = new Entity(shape, image);
             this.shape = shape;
-            
-            eventBus = new GameEventBus();
-
-            eventBus.InitializeEventBus(new List<GameEventType> { GameEventType.InputEvent });
-            eventBus.Subscribe(GameEventType.InputEvent, this);
-
         }
         ///<summary> Renders the player </summary>
         public void Render() {
@@ -108,8 +101,5 @@ namespace Breakout {
                     break;
             }
         }
-        ///<summary> Check if a key is pressed or released and acts accordingly 
-        ///using KeyPress or KeyRelease</summary>
-        public void ProcessEvent(GameEvent gameEvent) {}
     }
 }

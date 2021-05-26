@@ -10,21 +10,24 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.Physics;
 using DIKUArcade.Timers;
+using Breakout.PowerUps;
 
 namespace Breakout.BreakoutStates {
     public class GameRunning : IGameState{
         public EntityContainer<Block> blocks = new EntityContainer<Block>();
-        public EntityContainer<Ball> balls;
+        public static EntityContainer<Ball> balls;
+        public EntityContainer<PowerUp> powerUps = new EntityContainer<PowerUp>();
         private static GameRunning instance = null;
         private Entity backGroundImage;
         private bool GameState = true;
-        private Player player;
+        public static Player player {get;private set;}
         private ScoreBoard scoreBoard;
         private LivesLeft livesLeft;
         private TimeBoard timeBoard;
         public MetaReader normalBlock;
         public string[] levels = new String[]{"level1.txt","level2.txt","level3.txt","level4.txt"};
         public int counter = 0;
+        public Random rand;
 
         private StaticTimer stopWatch = new StaticTimer();
 
@@ -36,16 +39,18 @@ namespace Breakout.BreakoutStates {
             counter = 0;
             Loader.Reader(Path.Combine("Assets","Levels",levels[counter]));
             blocks = Loader.DrawMap();
+            powerUps.ClearContainer();
+            rand = new Random();
             backGroundImage = new Entity(
                 new DynamicShape(new Vec2F(0.0f, 0.0f), new Vec2F(1.0f, 1.0f)),
                 new Image(Path.Combine("Assets", "Images", "SpaceBackground.png")));
             player = new Player(new DynamicShape(new Vec2F(0.4f, 0.05f), new Vec2F(0.20f, 0.05f)), 
                 new Image(Path.Combine("Assets","Images","player.png")));
             balls = new EntityContainer<Ball>();
-            balls.AddEntity(new Ball(new Vec2F(0.5f, 0.1f),new Vec2F(-0.02f,0.01f)));
+            balls.AddEntity(new Ball(new Vec2F(0.5f, 0.1f),new Vec2F((float)rand.NextDouble()-rand.Next(1),(float)rand.NextDouble())));
             foreach(Ball x in balls) {x.AlignSpeed();}
             scoreBoard = new ScoreBoard("Score: ",new Vec2F(0.0f,0.6f), new Vec2F(0.4f,0.4f));
-            livesLeft = new LivesLeft("Lives left: ",new Vec2F(0.0f,0.7f), new Vec2F(0.4f,0.4f));
+            livesLeft = new LivesLeft("Lives left: ",new Vec2F(0.0f,0.1f), new Vec2F(0.4f,0.4f));
             timeBoard = new TimeBoard("Time left: ",new Vec2F(0.0f,0.2f), new Vec2F(0.4f,0.4f));
             StaticTimer.RestartTimer();
             if (Loader.Time > 0.00001){
@@ -53,10 +58,18 @@ namespace Breakout.BreakoutStates {
                 timeBoard.levelHasTimer = true;
             }
         }
+        //new Vec2F(-0.02f,0.01f)
         public void UpdateState() {
             IterateBallz();
+            IteratePowerUps();
             player.Move();
             timeBoard.RunClock();
+            if (balls.CountEntities() == 0) {
+                Console.WriteLine("Life has been lost mf");
+                livesLeft.LoseLife();
+                balls.AddEntity(new Ball(new Vec2F(player.getShape().Position.X + player.getExtent()/2,player.getShape().Position.Y),new Vec2F((float)rand.NextDouble()-rand.Next(1),(float)rand.NextDouble())));
+                foreach(Ball x in balls) {x.AlignSpeed();}
+            }
             if (blocks.CountEntities() - CountUnbreakable() == 0) {
                 if (counter < levels.Length-1) {
                     counter++;
@@ -70,10 +83,10 @@ namespace Breakout.BreakoutStates {
                         new GameEvent{EventType = GameEventType.GameStateEvent, 
                             From = this,
                             Message = "CHANGE_STATE",
-                            StringArg1 = "MAIN_MENU"});
+                            StringArg1 = "GAME_WON"});
                 }
             }
-            if (livesLeft.lives == 0) {
+            if (livesLeft.lives == 0 || timeBoard.secondsLeft == 0) {
                     BreakoutBus.GetBus().RegisterEvent(
                         new GameEvent{EventType = GameEventType.GameStateEvent, 
                             From = this,
@@ -173,12 +186,7 @@ namespace Breakout.BreakoutStates {
                 ball.Shape.Move();
                 if (ball.Shape.Position.Y < 0.0f) {
                     ball.DeleteEntity();
-                    if (balls.CountEntities() == 0) {
-                        livesLeft.LoseLife();
-                        balls.AddEntity(new Ball(new Vec2F(0.5f, 0.1f),new Vec2F(-0.02f,0.01f)));
-                        foreach(Ball x in balls) {x.AlignSpeed();}
                     }
-                }
                 if (ball.Shape.Position.Y + ball.Shape.Extent.Y >= 1.0f) {
                     ball.Shape.AsDynamicShape().ChangeDirection(new Vec2F(ball.Shape.AsDynamicShape().Direction.X,
                         -ball.Shape.AsDynamicShape().Direction.Y));
@@ -219,6 +227,15 @@ namespace Breakout.BreakoutStates {
                         ball.Shape.AsDynamicShape().Direction.Y));   
                     }
                 }
+            });
+        }
+
+        private void IteratePowerUps() {
+            powerUps.Iterate(powerUp => {
+                if (CollisionDetection.Aabb(powerUp.Shape.AsDynamicShape(), player.getEntity().Shape.AsDynamicShape()).Collision) {
+                    powerUp.Activate();
+                }
+                powerUp.Move();
             });
         }
     }

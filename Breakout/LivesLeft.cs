@@ -8,14 +8,15 @@ namespace Breakout {
         public LivesLeft(string text, Vec2F pos, Vec2F extent) : base(text, pos, extent) {
             SetColor(System.Drawing.Color.White); 
              lives = 3;
+             SetText("Lives left: " + Convert.ToString(lives));
         } 
 
         public void LoseLife () {
-            lives -= lives;
+            lives -= 1;
             SetText("Lives left: " + Convert.ToString(lives));
         }
         public void AddLife () {
-            lives += lives;
+            lives += 1;
             SetText("Lives left: " + Convert.ToString(lives));
         }
     }

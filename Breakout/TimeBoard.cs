@@ -12,13 +12,14 @@ namespace Breakout {
             levelHasTimer = false;
         }
         public void SetTimer (float sec) {
-            secondsLeft = sec;
+            secondsLeft = sec*10;
         }
         public void RunClock () {
             if (levelHasTimer) {
-                if ( StaticTimer.GetElapsedMilliseconds() + 1000.0f < StaticTimer.GetElapsedMilliseconds() ) {
+                if ( 1000.0f < StaticTimer.GetElapsedMilliseconds() ) {
+                    StaticTimer.RestartTimer();
                     secondsLeft -= 1.0f;
-                    SetText("Score: " + Convert.ToString(secondsLeft));
+                    SetText("Time: " + Convert.ToString(secondsLeft));
                 }
             }
         }

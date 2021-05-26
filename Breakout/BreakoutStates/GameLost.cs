@@ -50,7 +50,8 @@ namespace Breakout.BreakoutStates{
                         BreakoutBus.GetBus().RegisterEvent(
                         new GameEvent{EventType = GameEventType.GameStateEvent,
                             Message = "CHANGE_STATE",
-                            StringArg1 = "GAME_RUNNING"});
+                            StringArg1 = "GAME_RUNNING",
+                            StringArg2 = "RESET_STATE"});
                         break;
                     case 1:
                         BreakoutBus.GetBus().RegisterEvent(
@@ -77,7 +78,8 @@ namespace Breakout.BreakoutStates{
                 new Text("Play Again", new Vec2F(0.4f, 0.3f), new Vec2F(0.4f, 0.3f)), 
                 new Text("Main Menu", new Vec2F(0.4f, 0.2f), new Vec2F(0.4f, 0.3f))
             };
-            screenText = new Text ("You Lost", new Vec2F(0.3f, 0.4f), new Vec2F(0.6f, 0.4f));
+            screenText = new Text ("You Lost", new Vec2F(0.4f, 0.3f), new Vec2F(0.6f, 0.4f));
+            screenText.SetColor(System.Drawing.Color.White);
         }
 
         public static GameLost GetInstance() {

@@ -1,22 +1,24 @@
+using DIKUArcade.Entities;
+using DIKUArcade.Events;
 using DIKUArcade.State;
 using DIKUArcade.Graphics;
-using DIKUArcade.Entities;
 using System.IO;
 using DIKUArcade.Math;
-using DIKUArcade.Events;
 using DIKUArcade.Input;
-using DIKUArcade.Timers;
 
 namespace Breakout.BreakoutStates {
-    public class GamePaused : IGameState {
-        
-        private static GamePaused instance = null;
+    public class GameWon : IGameState {
         private Entity backGroundImage;
+        private static GameWon instance = null;
+        private int maxMenuButtons;
         private Text[] menuButtons;
         private int activeMenuButton;
-        private int maxMenuButtons;
-        public void ResetState() {}
-        public void UpdateState() {}
+        private Text screenText;
+
+        public void UpdateState(){}
+
+        public void ResetState(){}
+
         public void RenderState() {
             backGroundImage.RenderEntity();
             menuButtons[0].SetColor(System.Drawing.Color.White);
@@ -52,7 +54,6 @@ namespace Breakout.BreakoutStates {
                         new GameEvent{EventType = GameEventType.GameStateEvent,
                             Message = "CHANGE_STATE",
                             StringArg1 = "GAME_RUNNING"});
-                            StaticTimer.ResumeTimer();
                         break;
                     case 1:
                         BreakoutBus.GetBus().RegisterEvent(
@@ -66,7 +67,7 @@ namespace Breakout.BreakoutStates {
             }
         }
 
-        public GamePaused() {
+        public GameWon () {
             backGroundImage = new Entity(
                 new DynamicShape(new Vec2F(0.0f, 0.0f), new Vec2F(1.0f, 1.0f)),
                 new Image(Path.Combine("Assets", "Images", "shipit_titlescreen.png")));
@@ -76,16 +77,13 @@ namespace Breakout.BreakoutStates {
             maxMenuButtons = 2;
 
             menuButtons = new Text[] {
-                new Text("Continue", new Vec2F(0.4f, 0.3f), new Vec2F(0.4f, 0.3f)), 
+                new Text("Play Again", new Vec2F(0.4f, 0.3f), new Vec2F(0.4f, 0.3f)), 
                 new Text("Main Menu", new Vec2F(0.4f, 0.2f), new Vec2F(0.4f, 0.3f))
             };
-            
-            menuButtons[0].SetColor(System.Drawing.Color.White);
-            menuButtons[1].SetColor(System.Drawing.Color.White);
+            screenText = new Text ("You Win", new Vec2F(0.3f, 0.4f), new Vec2F(0.6f, 0.4f));
         }
-
-        public static GamePaused GetInstance () {
-            return GamePaused.instance ?? (GamePaused.instance = new GamePaused());
+        public static GameWon GetInstance () {
+            return GameWon.instance ?? (GameWon.instance = new GameWon());
         }
     }
-} 
+}

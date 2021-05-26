@@ -10,6 +10,10 @@ namespace Breakout.BreakoutStates {
                 return GameStateType.GamePaused;
             case "MAIN_MENU" :
                 return GameStateType.MainMenu;
+            case "GAME_LOST" :
+                return GameStateType.GameLost;
+            case "GAME_WON" :
+                return GameStateType.GameWon;
             default :
                 throw new ArgumentException(String.Format("This is not a gametype"));
             }
@@ -23,6 +27,10 @@ namespace Breakout.BreakoutStates {
                 return "GAME_PAUSED";
             case GameStateType.MainMenu :
                 return "MAIN_MENU";
+            case GameStateType.GameLost :
+                return "GAME_LOST";
+            case GameStateType.GameWon :
+                return "GAME_WON";
             default :
                 throw new ArgumentException(String.Format("This is not a gametype"));
             }

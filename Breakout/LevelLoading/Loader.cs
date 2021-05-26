@@ -19,6 +19,7 @@ namespace Breakout.LevelLoading {
         public static List<MetaReader> listofMeta = new List<MetaReader> ();
         public static EntityContainer<Block> blocks = new EntityContainer<Block> ();
         public static MetaReader normMeta = new MetaReader("                  ");
+        public static float Time;
 
         public static void Reader(string file) {
                 string path = Path.Combine(FileIO.GetProjectPath(),file);
@@ -28,6 +29,8 @@ namespace Breakout.LevelLoading {
                 legend = SplitArray(level,"Legend:","Legend/");
                 AssignChar(legend);
                 AssignMeta(metadata);
+                LevelTimer();
+
         }
         public static void Printer(string[] list){
             foreach(var item in list){
@@ -76,6 +79,13 @@ namespace Breakout.LevelLoading {
             listofMeta = new List<MetaReader>();
             foreach(var item in line) {
                 listofMeta.Add(new MetaReader(item));
+            }
+        }
+        public static void LevelTimer() {
+            foreach(var item in listofMeta) {
+                if (item.Time > 0.00001f) {
+                    Time = item.Time;
+                }
             }
         }
 

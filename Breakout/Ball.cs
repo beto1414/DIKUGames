@@ -7,7 +7,7 @@ using System.IO;
 namespace Breakout {
 
     public class Ball : Entity {
-        public float MOVEMENT_SPEED = 0.03f;
+        public static float MOVEMENT_SPEED = 0.03f;
 
         public Ball(Vec2F Position, Vec2F Direction) 
             : base (new DynamicShape(Position, new Vec2F(0.03f, 0.03f), Direction), new Image(Path.Combine("Assets", "Images", "ball2.png"))) {                

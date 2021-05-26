@@ -9,6 +9,7 @@ using System.IO;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.Physics;
+using DIKUArcade.Timers;
 
 namespace Breakout.BreakoutStates {
     public class GameRunning : IGameState{
@@ -19,9 +20,13 @@ namespace Breakout.BreakoutStates {
         private bool GameState = true;
         private Player player;
         private ScoreBoard scoreBoard;
+        private LivesLeft livesLeft;
+        private TimeBoard timeBoard;
         public MetaReader normalBlock;
         public string[] levels = new String[]{"level1.txt","level2.txt","level3.txt","level4.txt"};
         public int counter = 0;
+
+        private StaticTimer stopWatch = new StaticTimer();
 
         private void GameOver() {
             GameState = false;
@@ -40,11 +45,18 @@ namespace Breakout.BreakoutStates {
             balls.AddEntity(new Ball(new Vec2F(0.5f, 0.1f),new Vec2F(-0.02f,0.01f)));
             foreach(Ball x in balls) {x.AlignSpeed();}
             scoreBoard = new ScoreBoard("Score: ",new Vec2F(0.0f,0.6f), new Vec2F(0.4f,0.4f));
-            
+            livesLeft = new LivesLeft("Lives left: ",new Vec2F(0.0f,0.7f), new Vec2F(0.4f,0.4f));
+            timeBoard = new TimeBoard("Time left: ",new Vec2F(0.0f,0.2f), new Vec2F(0.4f,0.4f));
+            StaticTimer.RestartTimer();
+            if (Loader.Time > 0.00001){
+                timeBoard.SetTimer(Loader.Time);
+                timeBoard.levelHasTimer = true;
+            }
         }
         public void UpdateState() {
             IterateBallz();
             player.Move();
+            timeBoard.RunClock();
             if (blocks.CountEntities() - CountUnbreakable() == 0) {
                 if (counter < levels.Length-1) {
                     counter++;
@@ -61,6 +73,13 @@ namespace Breakout.BreakoutStates {
                             StringArg1 = "MAIN_MENU"});
                 }
             }
+            if (livesLeft.lives == 0) {
+                    BreakoutBus.GetBus().RegisterEvent(
+                        new GameEvent{EventType = GameEventType.GameStateEvent, 
+                            From = this,
+                            Message = "CHANGE_STATE",
+                            StringArg1 = "GAME_LOST"});
+            }
         }
         public int CountUnbreakable(){
             var count =0 ;
@@ -75,7 +94,9 @@ namespace Breakout.BreakoutStates {
         public void RenderState() { 
             backGroundImage.RenderEntity();
             if (GameState) {player.Render();}
-            if (GameState) {scoreBoard.RenderText();} 
+            if (GameState) {scoreBoard.RenderText();}
+            if (GameState) {livesLeft.RenderText();}
+            if (GameState && timeBoard.levelHasTimer) {timeBoard.RenderText();}
             if (GameState) {
                 blocks.Iterate(block => {
                     if (block.blockType == BlockType.Invisible) {
@@ -98,6 +119,7 @@ namespace Breakout.BreakoutStates {
                         From = this,
                         Message = "CHANGE_STATE",
                         StringArg1 = "GAME_PAUSED"});
+                    StaticTimer.PauseTimer();
                     break;
                     case KeyboardKey.Q:
                         if (counter < levels.Length-1) {
@@ -133,12 +155,12 @@ namespace Breakout.BreakoutStates {
 
         public Vec2F BounceDirection(CollisionDirection dir, Ball ball) {
             if (dir == CollisionDirection.CollisionDirUp || dir == CollisionDirection.CollisionDirDown) {
-                                    return new Vec2F(ball.Shape.AsDynamicShape().Direction.X, 
+                                    return new Vec2F(ball.Shape.AsDynamicShape().Direction.X,
                                         ball.Shape.AsDynamicShape().Direction.Y*-1);
             } else if (dir == CollisionDirection.CollisionDirLeft || dir == CollisionDirection.CollisionDirRight) {
-                    return new Vec2F(ball.Shape.AsDynamicShape().Direction.X*-1, 
+                    return new Vec2F(ball.Shape.AsDynamicShape().Direction.X*-1,
                         ball.Shape.AsDynamicShape().Direction.Y);
-            } else {return new Vec2F(ball.Shape.AsDynamicShape().Direction.X, 
+            } else {return new Vec2F(ball.Shape.AsDynamicShape().Direction.X,
                         ball.Shape.AsDynamicShape().Direction.Y);}
             }
 
@@ -151,6 +173,11 @@ namespace Breakout.BreakoutStates {
                 ball.Shape.Move();
                 if (ball.Shape.Position.Y < 0.0f) {
                     ball.DeleteEntity();
+                    if (balls.CountEntities() == 0) {
+                        livesLeft.LoseLife();
+                        balls.AddEntity(new Ball(new Vec2F(0.5f, 0.1f),new Vec2F(-0.02f,0.01f)));
+                        foreach(Ball x in balls) {x.AlignSpeed();}
+                    }
                 }
                 if (ball.Shape.Position.Y + ball.Shape.Extent.Y >= 1.0f) {
                     ball.Shape.AsDynamicShape().ChangeDirection(new Vec2F(ball.Shape.AsDynamicShape().Direction.X,

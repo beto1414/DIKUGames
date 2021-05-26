@@ -10,6 +10,7 @@ namespace Breakout {
         private const float MOVEMENT_SPEED = 0.04f;
         private float moveRight = 0.0f;  
         private float moveLeft = 0.0f;
+        public int life = 3;
         public Player(DynamicShape shape, IBaseImage image) {
             entity = new Entity(shape, image);
             this.shape = shape;

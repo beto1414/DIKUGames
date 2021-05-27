@@ -6,20 +6,21 @@ using System.IO;
 using DIKUArcade.Math;
 using Breakout.BreakoutStates;
 using System;
+using DIKUArcade.Utilities;
 
 namespace Breakout.PowerUps{
     public class Infinite : PowerUp {
-        public Infinite(DynamicShape Shape, IBaseImage Image) : base(Shape, Image) {
-            image = new Image(Path.Combine("Assets", "Images", "InfinitePowerUp.png"));
+        public Infinite(Vec2F Position) : base (Position, 
+            new Image(Path.Combine(FileIO.GetProjectPath(),Path.Combine("Assets", "Images", "InfinitePowerUp.png")))){
         }
 
         public override void Activate() {
             BreakoutBus.GetBus().RegisterEvent(new GameEvent {
                 EventType = GameEventType.TimedEvent,
-                Message = "SHOOT_BALL", StringArg1 = "INFINITE_ON"}); 
+                Message = "SHOOT_BALL", StringArg1 = "INFINITE_ON"});
             BreakoutBus.GetBus().RegisterTimedEvent(new GameEvent {
                 EventType = GameEventType.TimedEvent,
-                Message = "SHOOT_BALL", StringArg1 = "INFINITE_OFF"}, TimePeriod.NewSeconds(5.0));       
+                Message = "SHOOT_BALL", StringArg1 = "INFINITE_OFF"}, TimePeriod.NewSeconds(3.0f));     
         }
     }
 }

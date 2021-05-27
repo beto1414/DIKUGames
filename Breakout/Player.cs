@@ -12,12 +12,10 @@ namespace Breakout {
         private const float MOVEMENT_SPEED = 0.04f;
         private float moveRight = 0.0f;  
         private float moveLeft = 0.0f;
-        public int life = 3;
         private Random rand;
         public Player(DynamicShape shape, IBaseImage image) {
             entity = new Entity(shape, image);
             this.shape = shape;
-            rand = new Random();
         }
         ///<summary> Renders the player </summary>
         public void Render() {
@@ -100,7 +98,13 @@ namespace Breakout {
                     SetMoveRight(false);
                     break;
                 case KeyboardKey.Space:
-                    GameRunning.balls.AddEntity(new Ball(new Vec2F(GameRunning.player.getShape().Position.X + GameRunning.player.getExtent()/2,GameRunning.player.getShape().Position.Y+0.03f),new Vec2F((float)rand.NextDouble()-rand.Next(1),(float)rand.NextDouble())));
+                rand = new Random();
+                if (GameRunning.infiniteMode) {
+                    GameRunning.balls.AddEntity(new Ball(
+                        new Vec2F(GameRunning.player.getShape().Position.X + GameRunning.player.getExtent()/2,GameRunning.player.getShape().Position.Y),
+                        new Vec2F((float)rand.NextDouble()-rand.Next(2),(float)rand.NextDouble())));
+                    foreach(Ball x in GameRunning.balls) {x.AlignSpeed();}
+                }
                     break;
                 default:
                     break;

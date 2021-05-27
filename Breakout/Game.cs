@@ -12,9 +12,10 @@ namespace Breakout {
         public Game(WindowArgs winArgs) : base(winArgs) {
             window.SetKeyEventHandler(KeyHandler);
             BreakoutBus.GetBus().InitializeEventBus(new List<GameEventType> {
-                GameEventType.WindowEvent, GameEventType.GameStateEvent});
+                GameEventType.WindowEvent, GameEventType.GameStateEvent, GameEventType.TimedEvent});
             BreakoutBus.GetBus().Subscribe(GameEventType.WindowEvent,this);
             BreakoutBus.GetBus().Subscribe(GameEventType.GameStateEvent,this);
+            BreakoutBus.GetBus().Subscribe(GameEventType.TimedEvent, this);
             stateMachine = new StateMachine();
         }
 

@@ -23,7 +23,7 @@ namespace Breakout.BreakoutStates {
         public static Player player {get;private set;}
         public static bool infiniteMode = false;
         private ScoreBoard scoreBoard;
-        private LivesLeft livesLeft;
+        public static LivesLeft livesLeft;
         private TimeBoard timeBoard;
         public MetaReader normalBlock;
         public string[] levels = new String[]{"level1.txt","level2.txt","level3.txt","level4.txt"};
@@ -38,6 +38,8 @@ namespace Breakout.BreakoutStates {
         
         public void ResetState() {
             counter = 0;
+            infiniteMode = false;
+            Ball.MOVEMENT_SPEED = 0.015f;
             Loader.Reader(Path.Combine("Assets","Levels",levels[counter]));
             blocks = Loader.DrawMap();
             powerUps.ClearContainer();
@@ -58,8 +60,14 @@ namespace Breakout.BreakoutStates {
                 timeBoard.SetTimer(Loader.Time);
                 timeBoard.levelHasTimer = true;
             }
+            //powerUps.AddEntity(new ExtraLife(new Vec2F(0.5f,0.6f)));
+            powerUps.AddEntity(new DoubleSpeed(new Vec2F(0.5f, 0.6f)));
+            // powerUps.AddEntity(new ExtraBall(new Vec2F(0.5f, 0.6f)));
+            // powerUps.AddEntity(new ExtraLife(new Vec2F(0.5f, 0.6f)));
+            // powerUps.AddEntity(new HalfSpeed(new Vec2F(0.5f, 0.6f)));
+            //powerUps.AddEntity(new Infinite(new Vec2F(0.5f, 0.6f)));
+            
         }
-        //new Vec2F(-0.02f,0.01f)
         public void UpdateState() {
             IterateBallz();
             IteratePowerUps();
@@ -107,11 +115,12 @@ namespace Breakout.BreakoutStates {
         
         public void RenderState() { 
             backGroundImage.RenderEntity();
-            if (GameState) {player.Render();}
-            if (GameState) {scoreBoard.RenderText();}
-            if (GameState) {livesLeft.RenderText();}
-            if (GameState && timeBoard.levelHasTimer) {timeBoard.RenderText();}
             if (GameState) {
+                player.Render();
+                scoreBoard.RenderText();
+                livesLeft.RenderText();
+                powerUps.RenderEntities();
+                balls.RenderEntities();
                 blocks.Iterate(block => {
                     if (block.blockType == BlockType.Invisible) {
                         if (Invisible.visible) {
@@ -120,16 +129,16 @@ namespace Breakout.BreakoutStates {
                     block.RenderEntity();
                     }
                 });
-            }
-            if (GameState) {balls.RenderEntities();}
+            } 
+            if (GameState && timeBoard.levelHasTimer) {timeBoard.RenderText();}
         }
         public void HandleKeyEvent(KeyboardAction KeyAction, KeyboardKey keyValue) {
             if(KeyAction == KeyboardAction.KeyRelease) {
-                if (keyValue == KeyboardKey.Space){
-                  if (infiniteMode) {
-                      player.KeyRelease(keyValue);
-                }  
-                };
+                // if (!infiniteMode) {
+                // }
+                // else {
+                //     player.KeyRelease(keyValue);
+                // }
                 player.KeyRelease(keyValue);
                 switch(keyValue) {
                     case KeyboardKey.Escape:
@@ -241,6 +250,7 @@ namespace Breakout.BreakoutStates {
                 powerUp.Move();
                 if (CollisionDetection.Aabb(powerUp.Shape.AsDynamicShape(), player.getEntity().Shape.AsDynamicShape()).Collision) {
                     powerUp.Activate();
+                    powerUp.DeleteEntity();
                 } else if (powerUp.Shape.Position.Y+powerUp.Shape.Extent.Y < 0.0f){
                     powerUp.DeleteEntity();
                 }

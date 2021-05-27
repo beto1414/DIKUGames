@@ -5,14 +5,17 @@ using DIKUArcade.Timers;
 using DIKUArcade.Events;
 using System.IO;
 using Breakout.BreakoutStates;
+using DIKUArcade.Utilities;
+using DIKUArcade.Math;
 
 namespace Breakout.PowerUps {
     public class ExtraLife : PowerUp {
-        public ExtraLife(DynamicShape shape, IBaseImage image) : base(shape, image){
-            image = new Image(Path.Combine("Assets", "Images", "LifePickUp.png"));
+
+        public ExtraLife(Vec2F Position) : base (Position, 
+            new Image(Path.Combine(FileIO.GetProjectPath(),Path.Combine("Assets", "Images", "LifePickUp.png")))){
         }
         public override void Activate() {
-            GameRunning.player.life++;
+            GameRunning.livesLeft.AddLife();
         }
     }
 }

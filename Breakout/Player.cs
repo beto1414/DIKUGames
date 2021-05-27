@@ -1,8 +1,9 @@
-
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.Input;
+using Breakout.BreakoutStates;
+using System;
 
 namespace Breakout {
     public class Player {
@@ -12,9 +13,11 @@ namespace Breakout {
         private float moveRight = 0.0f;  
         private float moveLeft = 0.0f;
         public int life = 3;
+        private Random rand;
         public Player(DynamicShape shape, IBaseImage image) {
             entity = new Entity(shape, image);
             this.shape = shape;
+            rand = new Random();
         }
         ///<summary> Renders the player </summary>
         public void Render() {
@@ -95,6 +98,9 @@ namespace Breakout {
                     break;
                 case KeyboardKey.Right:
                     SetMoveRight(false);
+                    break;
+                case KeyboardKey.Space:
+                    GameRunning.balls.AddEntity(new Ball(new Vec2F(GameRunning.player.getShape().Position.X + GameRunning.player.getExtent()/2,GameRunning.player.getShape().Position.Y+0.03f),new Vec2F((float)rand.NextDouble()-rand.Next(1),(float)rand.NextDouble())));
                     break;
                 default:
                     break;

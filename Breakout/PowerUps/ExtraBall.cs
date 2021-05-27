@@ -17,10 +17,8 @@ namespace Breakout.PowerUps {
              image = new Image(Path.Combine("Assets", "Images", "ExtraBallPowerUp.png"));
          }
         public override void Activate() {
-            for(int i=0;i<1;i++){
-            GameRunning.balls.AddEntity(new Ball(new Vec2F(GameRunning.player.getShape().Position.X, GameRunning.player.getShape().Position.Y), 
+            GameRunning.balls.AddEntity(new Ball(new Vec2F(GameRunning.player.getShape().Position.X, GameRunning.player.getShape().Position.Y + 0.03f), 
             (new Vec2F((float)rand.NextDouble()-rand.Next(1),(float)rand.NextDouble()))));
-            }
         }
     }
 }

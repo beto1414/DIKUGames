@@ -21,6 +21,7 @@ namespace Breakout.BreakoutStates {
         private Entity backGroundImage;
         private bool GameState = true;
         public static Player player {get;private set;}
+        public static bool infiniteMode = false;
         private ScoreBoard scoreBoard;
         private LivesLeft livesLeft;
         private TimeBoard timeBoard;
@@ -124,6 +125,11 @@ namespace Breakout.BreakoutStates {
         }
         public void HandleKeyEvent(KeyboardAction KeyAction, KeyboardKey keyValue) {
             if(KeyAction == KeyboardAction.KeyRelease) {
+                if (keyValue == KeyboardKey.Space){
+                  if (infiniteMode) {
+                      player.KeyRelease(keyValue);
+                }  
+                };
                 player.KeyRelease(keyValue);
                 switch(keyValue) {
                     case KeyboardKey.Escape:
@@ -184,7 +190,7 @@ namespace Breakout.BreakoutStates {
         public void IterateBallz() {
             balls.Iterate(ball => {
                 ball.Shape.Move();
-                if (ball.Shape.Position.Y < 0.0f) {
+                if (ball.Shape.Position.Y + ball.Shape.Extent.Y < 0.0f) {
                     ball.DeleteEntity();
                     }
                 if (ball.Shape.Position.Y + ball.Shape.Extent.Y >= 1.0f) {
@@ -232,10 +238,12 @@ namespace Breakout.BreakoutStates {
 
         private void IteratePowerUps() {
             powerUps.Iterate(powerUp => {
+                powerUp.Move();
                 if (CollisionDetection.Aabb(powerUp.Shape.AsDynamicShape(), player.getEntity().Shape.AsDynamicShape()).Collision) {
                     powerUp.Activate();
+                } else if (powerUp.Shape.Position.Y+powerUp.Shape.Extent.Y < 0.0f){
+                    powerUp.DeleteEntity();
                 }
-                powerUp.Move();
             });
         }
     }

@@ -1,14 +1,17 @@
 using DIKUArcade.Events;
 using DIKUArcade.State;
+using DIKUArcade.Math;
+using System;
 
 namespace Breakout.BreakoutStates {
     public class StateMachine : IGameEventProcessor {
         public IGameState ActiveState { get; private set; }
         private int speedStacks;
+        private Random rand;
 
         public StateMachine() {
             BreakoutBus.GetBus().Subscribe(GameEventType.GameStateEvent, this);
-
+            rand = new Random();
             ActiveState = MainMenu.GetInstance();
         }
         private void SwitchState(GameStateType stateType){
@@ -51,6 +54,15 @@ namespace Breakout.BreakoutStates {
                         Ball.MOVEMENT_SPEED = 0.03f;
                     }
                 }
+            } else if (gameEvent.Message == "SHOOT_BALL") {
+                    if (gameEvent.StringArg1 == "INFINITE_ON") {
+                        GameRunning.infiniteMode = true;
+                    } else if (gameEvent.StringArg1 == "INFINITE_OFF") {
+                        GameRunning.infiniteMode = false;
+                    }
+
+                    
+                // GameRunning.balls.AddEntity(new Ball(new Vec2F(GameRunning.player.getShape().Position.X + GameRunning.player.getExtent()/2,GameRunning.player.getShape().Position.Y+0.03f),new Vec2F((float)rand.NextDouble()-rand.Next(1),(float)rand.NextDouble())));
             }
             if (gameEvent.StringArg2 == "RESET_STATE") {
                 ActiveState.ResetState();

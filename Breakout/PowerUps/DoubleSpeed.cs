@@ -3,15 +3,15 @@ using DIKUArcade.Entities;
 using DIKUArcade.Timers;
 using DIKUArcade.Events;
 using System.IO;
+using DIKUArcade.Utilities;
 
 namespace Breakout.PowerUps{
     public class DoubleSpeed : PowerUp {
         public DoubleSpeed(DynamicShape Shape, IBaseImage Image) : base(Shape, Image) {
-            image = new Image(Path.Combine("Assets", "Images", "DoubleSpeedPowerUp.png"));
+            image = new Image(Path.Combine(FileIO.GetProjectPath(),Path.Combine("Assets", "Images", "DoubleSpeedPowerUp.png")));
         }
 
         public override void Activate() {
-            speedTimer = 5.0;
             BreakoutBus.GetBus().RegisterEvent(new GameEvent {
                 EventType = GameEventType.TimedEvent,
                 Message = "CHANGE_SPEED",

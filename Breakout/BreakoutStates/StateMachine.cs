@@ -55,11 +55,11 @@ namespace Breakout.BreakoutStates {
                     Ball.MOVEMENT_SPEED = 0.0075f;
                     GameRunning.balls.Iterate(ball => {ball.AlignSpeed();});
                 } else if (gameEvent.StringArg1 == "NORMALIZE_SPEED") {
-                    //if (speedStacks <= 0) {
+                    if (!BreakoutBus.GetBus().HasTimedEvent(69) && !BreakoutBus.GetBus().HasTimedEvent(420)) {
                         Console.WriteLine(BreakoutBus.GetBus().HasTimedEvent(69));
                         Ball.MOVEMENT_SPEED = 0.015f;
                         GameRunning.balls.Iterate(ball => {ball.AlignSpeed();});
-                    //}
+                    }
                 }
             } else if (gameEvent.Message == "SHOOT_BALL") {
                     if (gameEvent.StringArg1 == "INFINITE_ON") {

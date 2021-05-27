@@ -12,8 +12,12 @@ namespace Breakout {
         } 
 
         public void LoseLife () {
-            lives -= 1;
-            SetText("Lives left: " + Convert.ToString(lives));
+            if ((lives -= 1) < -0.0000001) {
+                lives = 0;
+            } else {
+                lives -= 1;
+                SetText("Lives left: " + Convert.ToString(lives));
+            }
         }
         public void AddLife () {
             lives += 1;

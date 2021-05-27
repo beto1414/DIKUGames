@@ -22,7 +22,8 @@ namespace Breakout.PowerUps{
                 EventType = GameEventType.TimedEvent, 
                 Message = "CHANGE_SPEED",
                 StringArg1 = "NORMALIZE_SPEED",
-                StringArg2 = "REMOVE_STACK"}, TimePeriod.NewSeconds(5.0));
+                StringArg2 = "REMOVE_STACK",
+                Id = 420}, TimePeriod.NewSeconds(5.0));
         }
     }
 }

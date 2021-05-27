@@ -8,7 +8,7 @@ using Breakout.BreakoutStates;
 
 namespace Breakout {
     public class Game : DIKUGame, IGameEventProcessor {
-        private StateMachine stateMachine;
+        public StateMachine stateMachine {get; private set;}
         public Game(WindowArgs winArgs) : base(winArgs) {
             window.SetKeyEventHandler(KeyHandler);
             BreakoutBus.GetBus().InitializeEventBus(new List<GameEventType> {

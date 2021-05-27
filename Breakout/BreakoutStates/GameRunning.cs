@@ -60,10 +60,6 @@ namespace Breakout.BreakoutStates {
                 timeBoard.SetTimer(Loader.Time);
                 timeBoard.levelHasTimer = true;
             }
-            //powerUps.AddEntity(new DoubleSpeed(new Vec2F(0.5f, 0.6f)));
-            //powerUps.AddEntity(new ExtraBall(new Vec2F(0.5f, 0.6f)));
-            // powerUps.AddEntity(new ExtraLife(new Vec2F(0.5f, 0.6f)));
-            //powerUps.AddEntity(new HalfSpeed(new Vec2F(0.5f, 0.6f)));
             powerUps.AddEntity(new Infinite(new Vec2F(0.5f, 0.6f)));
             
         }
@@ -266,7 +262,7 @@ namespace Breakout.BreakoutStates {
             });
         }
 
-        private void IteratePowerUps() {
+        public void IteratePowerUps() {
             powerUps.Iterate(powerUp => {
                 powerUp.Move();
                 if (CollisionDetection.Aabb(powerUp.Shape.AsDynamicShape(), player.getEntity().Shape.AsDynamicShape()).Collision) {

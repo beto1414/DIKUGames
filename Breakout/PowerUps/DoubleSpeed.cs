@@ -19,7 +19,7 @@ namespace Breakout.PowerUps{
                 Message = "CHANGE_SPEED",
                 StringArg1 = "NORMALIZE_SPEED",
                 StringArg2 = "REMOVE_STACK",
-                Id = 69}, TimePeriod.NewSeconds(3));
+                Id = 69}, TimePeriod.NewMilliseconds(5000));
             BreakoutBus.GetBus().RegisterEvent(new GameEvent {
                 EventType = GameEventType.TimedEvent,
                 Message = "CHANGE_SPEED",

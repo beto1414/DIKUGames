@@ -19,8 +19,10 @@ namespace Breakout.PowerUps {
                 rand = new Random();
             }
         public override void Activate() {
-            GameRunning.balls.AddEntity(new Ball(new Vec2F(GameRunning.player.getShape().Position.X, GameRunning.player.getShape().Position.Y + 0.03f), 
-            (new Vec2F((float)rand.NextDouble()-rand.Next(1),(float)rand.NextDouble()))));
+                GameRunning.balls.AddEntity(new Ball(
+                    new Vec2F(GameRunning.player.getShape().Position.X + GameRunning.player.getExtent()/2,GameRunning.player.getShape().Position.Y),
+                    new Vec2F((float)rand.NextDouble()-rand.Next(1),(float)rand.NextDouble())));
+                foreach(Ball x in GameRunning.balls) {x.AlignSpeed();}
         }
     }
 }

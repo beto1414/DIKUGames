@@ -60,12 +60,11 @@ namespace Breakout.BreakoutStates {
                 timeBoard.SetTimer(Loader.Time);
                 timeBoard.levelHasTimer = true;
             }
-            //powerUps.AddEntity(new ExtraLife(new Vec2F(0.5f,0.6f)));
-            powerUps.AddEntity(new DoubleSpeed(new Vec2F(0.5f, 0.6f)));
-            // powerUps.AddEntity(new ExtraBall(new Vec2F(0.5f, 0.6f)));
+            //powerUps.AddEntity(new DoubleSpeed(new Vec2F(0.5f, 0.6f)));
+            //powerUps.AddEntity(new ExtraBall(new Vec2F(0.5f, 0.6f)));
             // powerUps.AddEntity(new ExtraLife(new Vec2F(0.5f, 0.6f)));
-            // powerUps.AddEntity(new HalfSpeed(new Vec2F(0.5f, 0.6f)));
-            //powerUps.AddEntity(new Infinite(new Vec2F(0.5f, 0.6f)));
+            //powerUps.AddEntity(new HalfSpeed(new Vec2F(0.5f, 0.6f)));
+            powerUps.AddEntity(new Infinite(new Vec2F(0.5f, 0.6f)));
             
         }
         public void UpdateState() {
@@ -74,7 +73,6 @@ namespace Breakout.BreakoutStates {
             player.Move();
             timeBoard.RunClock();
             if (balls.CountEntities() == 0) {
-                Console.WriteLine("Life has been lost mf");
                 livesLeft.LoseLife();
                 balls.AddEntity(new Ball(new Vec2F(player.getShape().Position.X + player.getExtent()/2,player.getShape().Position.Y),new Vec2F((float)rand.NextDouble()-rand.Next(1),(float)rand.NextDouble())));
                 foreach(Ball x in balls) {x.AlignSpeed();}
@@ -221,8 +219,31 @@ namespace Breakout.BreakoutStates {
                     }
                     if(block.hitPoint <= 0) {
                         if (!block.unbreakable) {
-                            block.DeleteEntity();
+                            if (block.blockType != BlockType.Normal) {
+                                Console.WriteLine(block.blockType);
+                            }
                             scoreBoard.AddPoints(block.blockValue);
+                            if (block.blockType == BlockType.PowerUpBlock) {
+                                var temp = rand.Next(5);
+                                switch(temp) {
+                                    case 0:
+                                        powerUps.AddEntity(new DoubleSpeed(block.Shape.Position + block.Shape.Extent/2));
+                                        break;
+                                    case 1:
+                                        powerUps.AddEntity(new ExtraLife(block.Shape.Position + block.Shape.Extent/2));
+                                        break;
+                                    case 2:
+                                        powerUps.AddEntity(new HalfSpeed(block.Shape.Position + block.Shape.Extent/2));
+                                        break;
+                                    case 3:
+                                        powerUps.AddEntity(new ExtraBall(block.Shape.Position + block.Shape.Extent/2));
+                                        break;
+                                    case 4:
+                                        powerUps.AddEntity(new Infinite(block.Shape.Position + block.Shape.Extent/2));
+                                        break;
+                                }
+                            }
+                            block.DeleteEntity();
                         }
                     }
                 });}

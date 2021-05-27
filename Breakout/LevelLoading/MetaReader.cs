@@ -4,7 +4,6 @@ using System.IO;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.Entities;
-
 namespace Breakout.LevelLoading {
     public class MetaReader {
         public string Name;
@@ -30,7 +29,7 @@ namespace Breakout.LevelLoading {
                 case "Powe":
                     blockChar = Convert.ToChar(line[line.Length-1]);
                     blockName = "PowerUp";
-                    blockType = BlockType.PowerUp;
+                    blockType = BlockType.PowerUpBlock;
                     break;
                 case "Time":
                     Time = Convert.ToInt32(line[6..8]);
@@ -50,6 +49,9 @@ namespace Breakout.LevelLoading {
                         new Image(Path.Combine("Assets","Images",Loader.CharToFile(blockChar))));
                 case BlockType.Invisible :
                     return new Invisible(new StationaryShape(position, new Vec2F(0.08f, 0.03f)), 
+                        new Image(Path.Combine("Assets","Images",Loader.CharToFile(blockChar))));
+                case BlockType.PowerUpBlock :
+                    return new PowerUpBlock(new StationaryShape(position, new Vec2F(0.08f, 0.03f)), 
                         new Image(Path.Combine("Assets","Images",Loader.CharToFile(blockChar))));
                 default:
                     return new Normal(new StationaryShape(position, new Vec2F(0.08f, 0.03f)), 

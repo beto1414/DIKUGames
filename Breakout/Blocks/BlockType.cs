@@ -3,7 +3,7 @@ namespace Breakout.Blocks {
         Normal,
         Invisible,
         Unbreakable,
-        PowerUp,
+        PowerUpBlock,
         Hardened
     }
 }

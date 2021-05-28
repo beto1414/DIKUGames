@@ -16,13 +16,11 @@ namespace Breakout.PowerUps{
             BreakoutBus.GetBus().RegisterEvent(new GameEvent {
                 EventType = GameEventType.TimedEvent,
                 Message = "CHANGE_SPEED",
-                StringArg1 = "SPEED_DOWN",
-                StringArg2 = "STACKS!"});
+                StringArg1 = "SPEED_DOWN"});
             BreakoutBus.GetBus().RegisterTimedEvent(new GameEvent {
                 EventType = GameEventType.TimedEvent, 
                 Message = "CHANGE_SPEED",
                 StringArg1 = "NORMALIZE_SPEED",
-                StringArg2 = "REMOVE_STACK",
                 Id = 420}, TimePeriod.NewSeconds(5.0));
         }
     }

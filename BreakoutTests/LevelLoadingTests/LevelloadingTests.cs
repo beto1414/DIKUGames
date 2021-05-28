@@ -25,12 +25,12 @@ namespace BreakoutTests.LevelLoadingTests {
         [Test]
         public void MetaTest_0() {
             Loader.Reader(Path.Combine("Assets","Levels","level1.txt"));
-            Assert.AreEqual(Loader.listofMeta.Count, 4);
+            Assert.AreEqual(Loader.listofMeta.Count, 3);
         }
         
         [Test]
         public void MetaTest_1() {
-            intList = new int[] {1,1,4,3,4,1};
+            intList = new int[] {1,1,3,3,4,1};
             int counter = 0;
             foreach (var item in levelNames) {
                 Loader.Reader(item);

@@ -1,70 +1,94 @@
 using NUnit.Framework;
 using Breakout;
+using System.IO;
+using System;
+using Breakout.PowerUps;
+using Breakout.LevelLoading;
+using Breakout.BreakoutStates;
 using DIKUArcade.GUI;
 using DIKUArcade.Entities;
 using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.Utilities;
 using DIKUArcade.Timers;
-using Breakout.BreakoutStates;
+using DIKUArcade.Events;
+using DIKUArcade.Input;
+using System.Collections.Generic;
 
 namespace BreakoutTests.EntityTests {
-    [TextFixture]
+    [TestFixture]
     public class WinLoseTests {
-        WindowsArgs winArgs;
-        Game newGame;
-        float tolerance;
-        GameRunning state;
-        GameTimer gameTimer;
+        private WindowArgs winArgs;
+        private GameRunning state;
+        private GameTimer gameTimer;
+        private StateMachine stateMachine;
 
         [SetUp]
         public void SetUp() {
-            winArgs = new WindowArgs(); 
-            // newGame = new Game(winArgs);
-            tolerance = 0.0000001f;
-            state = new GameRunning();
-            BreakoutBus.GetBus().RegisterEvent(            
-                new GameEvent{EventType = GameEventType.GameStateEvent, 
-                    From = this,
-                    Message = "CHANGE_STATE",
-                    StringArg1 = "GAME_RUNNING",
-                    StringArg2 = "RESET_STATE"});
+            winArgs = new WindowArgs();
             gameTimer = new GameTimer();
+            
+            stateMachine = new StateMachine(); 
+            BreakoutBus.GetBus().Subscribe(GameEventType.WindowEvent,stateMachine);
+            BreakoutBus.GetBus().Subscribe(GameEventType.GameStateEvent,stateMachine);
+            BreakoutBus.GetBus().Subscribe(GameEventType.TimedEvent, stateMachine);
+            state = new GameRunning();
         }
 
         [Test]
         public void TestLifeNegative() {
-            state.LivesLeft.AddLife(3);
+            for (int i = 0;i<3;i++) {
+                GameRunning.livesLeft.AddLife();
+            }
             for (int i = 0;i<10;i++) {
-                state.LivesLeft.LoseLife();
-                Assert.IsTrue(state.LivesLeft.lives > -0.00001);
+                GameRunning.livesLeft.LoseLife();
+                Assert.IsTrue(GameRunning.livesLeft.lives > -0.00001);
             }
         }
 
         [Test]
-        public void PlayerLosesLife() {
-            state.balls.ClearContainer;
-            state.balls.AddEntity(new Ball(new Vec2F(0.5f,0.5f),new Vec2F(0.0f, -0.1f)));
-            foreach(Ball x in state.balls) {x.AlignSpeed();}
-            for (int i = 0;i<5;i++) {
-                state.ShouldUpdate();
+        public void PlayerLosesLifeOneBall() {
+            GameRunning.balls.ClearContainer();
+            GameRunning.balls.AddEntity(new Ball(new Vec2F(0.5f,0.5f),new Vec2F(0.0f, -0.3f)));
+            for (int i = 0;i<10000;i++) {
+                state.UpdateState();
             }
-            //3 lives is the starting amount, this would confirm such.
-            Assert.IsTrue(state.livesLeft.lives < 3);
-            //            balls.AddEntity(new Ball(new Vec2F(0.5f, 0.1f),new Vec2F((float)rand.NextDouble()-rand.Next(1),(float)rand.NextDouble())));
-            //foreach(Ball x in balls) {x.AlignSpeed();}
-
-
+            //3 lives is the starting amount, this would confirm health diminishing when balls are lost.
+            Assert.IsTrue(GameRunning.livesLeft.lives < 3);
         }
-
         [Test]
         public void LivesWhileBallsInPlay() {
+            GameRunning.balls.ClearContainer();
+            GameRunning.balls.AddEntity(new Ball(new Vec2F(0.5f,0.5f),new Vec2F(0.0f, -0.2f)));
+            GameRunning.balls.AddEntity(new Ball(new Vec2F(0.5f,0.5f),new Vec2F(0.0f, 0.0f)));
+            foreach(Ball x in GameRunning.balls) {x.AlignSpeed();}
+            for (int i = 0;i<5;i++) {
+                state.IterateBallz();
+            }
+            //Since >1 ball is always at play, losing one ball would not lose the player a life.
+            Assert.IsTrue(GameRunning.livesLeft.lives == 3);
         }
         [Test]
         public void TimePerMap() {
+        var level = new float[]{300,180,180};
+        var counter = 0;
+        var levels = new String[]{"level1.txt","level2.txt","level3.txt"};
+        foreach (float i in level) {
+            Loader.Reader(Path.Combine(FileIO.GetProjectPath(),Path.Combine("Assets","Levels",levels[counter])));
+            state.blocks = Loader.DrawMap();
+            if (Loader.Time > 0.00001){
+                state.timeBoard.SetTimer(Loader.Time);
+                state.timeBoard.levelHasTimer = true;}
+            if (counter < 3) {counter++;}
+            Console.WriteLine(state.timeBoard.secondsLeft);
+            Console.WriteLine(i);
+            Console.WriteLine(i == state.timeBoard.secondsLeft);
+            Assert.IsTrue(state.timeBoard.secondsLeft - i < 0.00001);
+        }
         }
         [Test]
         public void LoseGameTimerZero() {
+
         }
         [Test]
         public void LoseGameLivesZero() {

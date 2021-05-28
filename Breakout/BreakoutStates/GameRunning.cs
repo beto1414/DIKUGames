@@ -24,9 +24,9 @@ namespace Breakout.BreakoutStates {
         public static bool infiniteMode = false;
         private ScoreBoard scoreBoard;
         public static LivesLeft livesLeft;
-        private TimeBoard timeBoard;
+        public TimeBoard timeBoard {get; private set;}
         public MetaReader normalBlock;
-        public string[] levels = new String[]{"level1.txt","level2.txt","level3.txt","level4.txt"};
+        public static string[] levels = new String[]{"level1.txt","level2.txt","level3.txt","level4.txt"};
         public int counter = 0;
         public Random rand;
 
@@ -60,7 +60,6 @@ namespace Breakout.BreakoutStates {
                 timeBoard.SetTimer(Loader.Time);
                 timeBoard.levelHasTimer = true;
             }
-            powerUps.AddEntity(new Infinite(new Vec2F(0.5f, 0.6f)));
             
         }
         public void UpdateState() {
@@ -80,7 +79,7 @@ namespace Breakout.BreakoutStates {
                     balls.AddEntity(new Ball(new Vec2F(0.5f, 0.1f),new Vec2F(-0.02f,0.01f)));
                     foreach(Ball x in balls) {x.AlignSpeed();}
                     Loader.Reader(Path.Combine("Assets","Levels",levels[counter]));
-                    blocks = Loader.DrawMap();
+                    blocks = Loader.DrawMap(); 
                 } else {
                     BreakoutBus.GetBus().RegisterEvent(
                         new GameEvent{EventType = GameEventType.GameStateEvent, 
@@ -128,11 +127,6 @@ namespace Breakout.BreakoutStates {
         }
         public void HandleKeyEvent(KeyboardAction KeyAction, KeyboardKey keyValue) {
             if(KeyAction == KeyboardAction.KeyRelease) {
-                // if (!infiniteMode) {
-                // }
-                // else {
-                //     player.KeyRelease(keyValue);
-                // }
                 player.KeyRelease(keyValue);
                 switch(keyValue) {
                     case KeyboardKey.Escape:

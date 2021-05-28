@@ -2,11 +2,11 @@ using DIKUArcade.Events;
 using DIKUArcade.State;
 using DIKUArcade.Math;
 using System;
+using System.IO;
 
 namespace Breakout.BreakoutStates {
     public class StateMachine : IGameEventProcessor {
         public IGameState ActiveState { get; private set; }
-        private int speedStacks;
         private Random rand;
 
         public StateMachine() {
@@ -38,16 +38,6 @@ namespace Breakout.BreakoutStates {
             if (gameEvent.Message == "CHANGE_STATE") {
                 SwitchState(StateTransformer.TransformStringToState(gameEvent.StringArg1));
             } else if (gameEvent.Message == "CHANGE_SPEED") {
-                Console.WriteLine(BreakoutBus.GetBus().HasTimedEvent(69));
-                if (gameEvent.StringArg2 == "STACKS!") {
-                        speedStacks++;
-                        Console.WriteLine("Stacking... Amount of Stacks: " + speedStacks);
-                } else if (gameEvent.StringArg2 == "REMOVE_STACKS") {
-                    if (speedStacks > 0) {
-                            speedStacks--;
-                            Console.WriteLine("Stacking... Amount of Stacks: " + speedStacks);
-                    }
-                }
                 if (gameEvent.StringArg1 == "SPEED_UP") {
                     Ball.MOVEMENT_SPEED = 0.03f;
                     GameRunning.balls.Iterate(ball => {ball.AlignSpeed();});
@@ -56,7 +46,6 @@ namespace Breakout.BreakoutStates {
                     GameRunning.balls.Iterate(ball => {ball.AlignSpeed();});
                 } else if (gameEvent.StringArg1 == "NORMALIZE_SPEED") {
                     if (!BreakoutBus.GetBus().HasTimedEvent(69) && !BreakoutBus.GetBus().HasTimedEvent(420)) {
-                        Console.WriteLine(BreakoutBus.GetBus().HasTimedEvent(69));
                         Ball.MOVEMENT_SPEED = 0.015f;
                         GameRunning.balls.Iterate(ball => {ball.AlignSpeed();});
                     }
@@ -64,10 +53,8 @@ namespace Breakout.BreakoutStates {
             } else if (gameEvent.Message == "SHOOT_BALL") {
                     if (gameEvent.StringArg1 == "INFINITE_ON") {
                         GameRunning.infiniteMode = true;
-                        Console.WriteLine("Turn on");
                     } else if (gameEvent.StringArg1 == "INFINITE_OFF") {
                         GameRunning.infiniteMode = false;
-                        Console.WriteLine("Turn off");  
                     }
             }
             if (gameEvent.StringArg2 == "RESET_STATE") {

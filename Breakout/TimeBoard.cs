@@ -19,7 +19,6 @@ namespace Breakout {
 
             if (levelHasTimer) {
                 if ( counter < StaticTimer.GetElapsedMilliseconds() ) {
-                    //StaticTimer.RestartTimer();
                     counter += 1000.0f;
                     secondsLeft -= 1.0f;
                     SetText("Time: " + Convert.ToString(secondsLeft));

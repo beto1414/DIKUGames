@@ -16,25 +16,6 @@ namespace Breakout.Blocks {
 
         public override void Hit() {
             hitPoint -= 1;
-            // var temp = rand.Next(5);
-            //                     switch(temp) {
-            //                         case 0:
-            //                             GameRunning.powerUps.AddEntity(new DoubleSpeed(Shape.Position + Shape.Extent/2));
-            //                             break;
-            //                         case 1:
-            //                             powerUps.AddEntity(new ExtraLife(block.Shape.Position + block.Shape.Extent/2));
-            //                             break;
-            //                         case 2:
-            //                             powerUps.AddEntity(new HalfSpeed(block.Shape.Position + block.Shape.Extent/2));
-            //                             break;
-            //                         case 3:
-            //                             powerUps.AddEntity(new ExtraBall(block.Shape.Position + block.Shape.Extent/2));
-            //                             break;
-            //                         case 4:
-            //                             powerUps.AddEntity(new Infinite(block.Shape.Position + block.Shape.Extent/2));
-            //                             break;
-            //                     }
         }
-
     }
 }

@@ -13,7 +13,9 @@ namespace Breakout.PowerUps{
         public Infinite(Vec2F Position) : base (Position, 
             new Image(Path.Combine(FileIO.GetProjectPath(),Path.Combine("Assets", "Images", "InfinitePowerUp.png")))){
         }
-
+///<summary>
+///allows the player to shoot an infinite amount of balls.
+///</summary>
         public override void Activate() {
             BreakoutBus.GetBus().RegisterEvent(new GameEvent {
                 EventType = GameEventType.TimedEvent,

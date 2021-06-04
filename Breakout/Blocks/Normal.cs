@@ -11,6 +11,9 @@ namespace Breakout.Blocks {
             blockValue = 1;
         }
 
+///<summary>
+///Block takes damage
+///</summary>
         public override void Hit() {
             hitPoint -= 1;
         }

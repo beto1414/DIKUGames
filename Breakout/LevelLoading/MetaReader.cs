@@ -32,7 +32,7 @@ namespace Breakout.LevelLoading {
                     blockType = BlockType.PowerUpBlock;
                     break;
                 case "Time":
-                    Time = Convert.ToInt32(line[6..8]);
+                    Time = Convert.ToInt32(line[6..9]);
                     break;
                 case "Invi":
                     blockChar = Convert.ToChar(line[line.Length-1]);
@@ -41,7 +41,15 @@ namespace Breakout.LevelLoading {
                     break;
             }
         }
-
+///<summary>
+///The method returns a block object after pattern-matching through what type the block is.
+//Loader.CharToFile is a helper function which indentifies what image the specific block has.
+///</summary>
+///<param name="position"> Vec2F containing a position on the screen.
+///</param>
+///<returns>
+///Returns a block object of a certain type.
+///</returns>
         public Block charToBlock (Vec2F position) {
             switch (blockType) {
                 case BlockType.Unbreakable :

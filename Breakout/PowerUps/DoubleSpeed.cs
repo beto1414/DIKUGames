@@ -12,6 +12,9 @@ namespace Breakout.PowerUps{
             base(Position, new Image(Path.Combine(FileIO.GetProjectPath(),
                 Path.Combine("Assets", "Images", "DoubleSpeedPowerUp.png")))) {}
 
+///<summary>
+/// Doubles the speed for the ball.
+///</summary>
         public override void Activate() {
             BreakoutBus.GetBus().RegisterTimedEvent(new GameEvent {
                 EventType = GameEventType.TimedEvent, 

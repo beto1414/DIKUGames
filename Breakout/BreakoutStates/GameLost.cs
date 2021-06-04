@@ -82,6 +82,9 @@ namespace Breakout.BreakoutStates{
             screenText.SetColor(System.Drawing.Color.White);
         }
 
+///<summary>
+///returns this class' instance. If the class is not instancilized, make a new instance
+///</summary>
         public static GameLost GetInstance() {
             return GameLost.instance ?? (GameLost.instance = new GameLost());
         }

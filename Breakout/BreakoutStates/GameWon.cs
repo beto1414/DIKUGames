@@ -82,6 +82,10 @@ namespace Breakout.BreakoutStates {
             };
             screenText = new Text ("You Win", new Vec2F(0.3f, 0.4f), new Vec2F(0.6f, 0.4f));
         }
+
+///<summary>
+///returns this class' instance. If the class is not instancilized, make a new instance
+///</summary>
         public static GameWon GetInstance () {
             return GameWon.instance ?? (GameWon.instance = new GameWon());
         }

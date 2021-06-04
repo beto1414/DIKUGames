@@ -32,6 +32,9 @@ namespace Breakout.BreakoutStates {
 
         private StaticTimer stopWatch = new StaticTimer();
 
+///<summary>
+///Switches Gamestate (if the game should be running) to false
+///</summary>
         private void GameOver() {
             GameState = false;
         }
@@ -59,6 +62,8 @@ namespace Breakout.BreakoutStates {
             if (Loader.Time > 0.00001){
                 timeBoard.SetTimer(Loader.Time);
                 timeBoard.levelHasTimer = true;
+            } else {
+                timeBoard.levelHasTimer = false;
             }
             
         }
@@ -79,7 +84,11 @@ namespace Breakout.BreakoutStates {
                     balls.AddEntity(new Ball(new Vec2F(0.5f, 0.1f),new Vec2F(-0.02f,0.01f)));
                     foreach(Ball x in balls) {x.AlignSpeed();}
                     Loader.Reader(Path.Combine("Assets","Levels",levels[counter]));
-                    blocks = Loader.DrawMap(); 
+                    blocks = Loader.DrawMap();
+                    if (Loader.Time > 0.00001){
+                        timeBoard.SetTimer(Loader.Time);
+                        timeBoard.levelHasTimer = true;
+                    }
                 } else {
                     BreakoutBus.GetBus().RegisterEvent(
                         new GameEvent{EventType = GameEventType.GameStateEvent, 
@@ -96,6 +105,13 @@ namespace Breakout.BreakoutStates {
                             StringArg1 = "GAME_LOST"});
             }
         }
+
+///<summary>
+///Counts how many unbreakable blocks are unbreakable in blocks entitycontainer
+///</summary>
+///<returns>
+///Returns an integer equals to the amount of unbreakable blocks in blocks entitycontainer
+///</returns>
         public int CountUnbreakable(){
             var count =0 ;
             foreach (Block item in blocks) {
@@ -145,6 +161,12 @@ namespace Breakout.BreakoutStates {
                             foreach(Ball x in balls) {x.AlignSpeed();}
                             Loader.Reader(Path.Combine("Assets","Levels",levels[counter]));
                             blocks = Loader.DrawMap();
+                            if (Loader.Time > 0.00001){
+                                timeBoard.SetTimer(Loader.Time);
+                                timeBoard.levelHasTimer = true;
+                            } else {
+                                timeBoard.levelHasTimer = false;
+                            }
                         } else {
                             BreakoutBus.GetBus().RegisterEvent(
                                 new GameEvent{EventType = GameEventType.GameStateEvent, 
@@ -164,11 +186,26 @@ namespace Breakout.BreakoutStates {
             ResetState();
         }
 
+///<summary>
+///returns this class' instance. If the class is not instancilized, make a new instance
+///</summary>
         public static GameRunning GetInstance () {
             return GameRunning.instance ?? (GameRunning.instance = new GameRunning());
         }
 
 
+///<summary>
+///Determines which direction the ball should bounce accordingly to how the ball hits an object
+///</summary>
+///<param name="dir"> 
+///The direction the ball collides from
+///</param>
+///<param name="ball">
+///The ball which contains it's direction before collision
+///</param>
+///<returns>
+///A Vec2F that tells the direction the ball now should bounce
+///</returns>
         public Vec2F BounceDirection(CollisionDirection dir, Ball ball) {
             if (dir == CollisionDirection.CollisionDirUp || dir == CollisionDirection.CollisionDirDown) {
                                     return new Vec2F(ball.Shape.AsDynamicShape().Direction.X,
@@ -180,10 +217,10 @@ namespace Breakout.BreakoutStates {
                         ball.Shape.AsDynamicShape().Direction.Y);}
             }
 
-        ///<summary>
-        ///Iterate balls vil tage sig af hvilke positioner forskellige entities har i forhold til hindanden og udfra det
-        ///vurdere om to entities kollidere og i det tilfælde ændre balls direction og position.
-        ///</summary>
+///<summary>
+///Goes through all balls and checks if there is a collision with either a block or walls, then bounces accordingly if there is.
+///If collision is with a block, the block takes damage and is deleted if health i 0 or below. It also acts accordingly to block type
+///</summary>
         public void IterateBallz() {
             balls.Iterate(ball => {
                 ball.Shape.Move();
@@ -209,9 +246,6 @@ namespace Breakout.BreakoutStates {
                     }
                     if(block.hitPoint <= 0) {
                         if (!block.unbreakable) {
-                            if (block.blockType != BlockType.Normal) {
-                                Console.WriteLine(block.blockType);
-                            }
                             scoreBoard.AddPoints(block.blockValue);
                             if (block.blockType == BlockType.PowerUpBlock) {
                                 var temp = rand.Next(5);
@@ -256,6 +290,10 @@ namespace Breakout.BreakoutStates {
             });
         }
 
+///<summary>
+///Goes through all existing power ups, moves them, and then determines if they have collided with a player.
+///If collision have occured, it activates the power up.
+///</summary>
         public void IteratePowerUps() {
             powerUps.Iterate(powerUp => {
                 powerUp.Move();

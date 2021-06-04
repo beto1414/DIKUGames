@@ -22,9 +22,17 @@ namespace Breakout {
         private void KeyHandler(KeyboardAction action, KeyboardKey key) {
             stateMachine.ActiveState.HandleKeyEvent(action, key);
         }
+
+///<summary>
+///Renders from stateMachine's ActiveState
+///</summary>
         public override void Render() {
             stateMachine.ActiveState.RenderState();
         }
+
+///<summary>
+///Updates Game Logic from stateMachine's ActiveState
+///</summary>
         public override void Update() {
             stateMachine.ActiveState.UpdateState();
             BreakoutBus.GetBus().ProcessEvents();

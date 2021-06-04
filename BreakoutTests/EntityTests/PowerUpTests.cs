@@ -17,7 +17,6 @@ namespace BreakoutTests.EntityTests {
     [TestFixture]
     public class PowerUpTests {
         private WindowArgs winArgs;
-        //private Game newGame;
         private ExtraLife extraLife;
         private ExtraBall extraBall;
         private DoubleSpeed doubleSpeed;
@@ -32,19 +31,10 @@ namespace BreakoutTests.EntityTests {
         public void SetUp() {
             winArgs = new WindowArgs();
             stateMachine = new StateMachine(); 
-            // BreakoutBus.GetBus().InitializeEventBus(new List<GameEventType> {
-            // GameEventType.WindowEvent, GameEventType.GameStateEvent, GameEventType.TimedEvent});
             BreakoutBus.GetBus().Subscribe(GameEventType.WindowEvent,stateMachine);
             BreakoutBus.GetBus().Subscribe(GameEventType.GameStateEvent,stateMachine);
             BreakoutBus.GetBus().Subscribe(GameEventType.TimedEvent, stateMachine);
             state = new GameRunning();
-            // BreakoutBus.GetBus().RegisterEvent(            
-            //     new GameEvent{EventType = GameEventType.GameStateEvent, 
-            //         From = this,
-            //         Message = "CHANGE_STATE",
-            //         StringArg1 = "GAME_RUNNING",
-            //         StringArg2 = "RESET_STATE"});
-            // BreakoutBus.GetBus().ProcessEvents();
             extraLife = new ExtraLife(new Vec2F(0.5f, 0.5f));
             extraBall = new ExtraBall(new Vec2F(0.5f, 0.5f));
             doubleSpeed = new DoubleSpeed(new Vec2F(0.5f, 0.5f));

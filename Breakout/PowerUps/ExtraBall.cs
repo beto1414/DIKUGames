@@ -18,6 +18,9 @@ namespace Breakout.PowerUps {
             ("Assets", "Images", "ExtraBallPowerUp.png")))) {
                 rand = new Random();
             }
+///<summary>
+///Adds a new ball entity whenever the powerup is picked up.
+///</summary>
         public override void Activate() {
                 GameRunning.balls.AddEntity(new Ball(
                     new Vec2F(GameRunning.player.getShape().Position.X + GameRunning.player.getExtent()/2,GameRunning.player.getShape().Position.Y),

@@ -13,6 +13,9 @@ namespace Breakout {
             : base (new DynamicShape(Position, new Vec2F(0.03f, 0.03f), Direction), new Image(Path.Combine("Assets", "Images", "ball2.png"))) {                
             }
 
+///<summary>
+///Scales the ball's direction such the Vec2F fits the MOVEMENT_SPEED
+///</summary>
         public void AlignSpeed() {
             var x = Shape.AsDynamicShape().Direction.X;
             var y = Shape.AsDynamicShape().Direction.Y;

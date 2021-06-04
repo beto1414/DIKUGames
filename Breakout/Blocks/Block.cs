@@ -16,6 +16,10 @@ namespace Breakout.Blocks {
         public Block (Shape Shape, IBaseImage Image) 
             : base (Shape, Image) {}
 
+
+///<summary> 
+///Activates a block's Hit-method when called. Should be activated when a ball hits the block
+///</summary>
         public abstract void Hit();
     }
 }

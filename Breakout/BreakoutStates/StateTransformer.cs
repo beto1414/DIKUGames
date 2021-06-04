@@ -2,6 +2,15 @@ using System;
 
 namespace Breakout.BreakoutStates {
     public class StateTransformer {
+///<summary>
+///Transforms a string into a GameStateType
+///</summary>
+///<param name="state">
+///A string that matches a GameStateType
+///</param>
+///<returns>
+///A GameStateType matching the string
+///</returns>
         public static GameStateType TransformStringToState(string state) {
             switch (state) {
             case "GAME_RUNNING" :
@@ -19,6 +28,15 @@ namespace Breakout.BreakoutStates {
             }
         }
 
+///<summary>
+///Transforms a GameStateType into a string
+///</summary>
+///<param name="state">
+///A GameStateType
+///</param>
+///<returns>
+///A string matching the GameStateType argument
+///</returns>
         public static string TransformStateToString(GameStateType state) {
             switch (state) {
             case GameStateType.GameRunning :

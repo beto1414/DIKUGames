@@ -14,6 +14,9 @@ namespace Breakout.PowerUps {
         public ExtraLife(Vec2F Position) : base (Position, 
             new Image(Path.Combine(FileIO.GetProjectPath(),Path.Combine("Assets", "Images", "LifePickUp.png")))){
         }
+///<summary>
+///Adds a life to the player.
+///</summary>
         public override void Activate() {
             GameRunning.livesLeft.AddLife();
         }

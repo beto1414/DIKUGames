@@ -17,17 +17,17 @@ namespace Breakout {
             entity = new Entity(shape, image);
             this.shape = shape;
         }
-        ///<summary> Renders the player </summary>
+///<summary> Renders the player </summary>
         public void Render() {
             entity.RenderEntity();
         }
-        ///<summary> Updates which diretion player should move. - is left and + is right </summary>
+///<summary> Updates which diretion player should move. - is left and + is right </summary>
         private void UpdateDirection() {
             shape.Direction.X = (moveLeft + moveRight);
         }
-        ///<summary> Sets moveLeft to movementspeed and 0 depending on boolean
-        ///value. Calls method to update the direction of the player after setting. </summary>
-        ///<param name = "val"> a boolean whether player should move or not </param>.
+///<summary> Sets moveLeft to movementspeed and 0 depending on boolean
+///value. Calls method to update the direction of the player after setting. </summary>
+///<param name = "val"> a boolean whether player should move or not </param>.
         private void SetMoveLeft(bool val) {
             if (val) {
                 moveLeft = -MOVEMENT_SPEED;
@@ -37,9 +37,9 @@ namespace Breakout {
                 UpdateDirection();
             }
         }
-        ///<summary> Sets moveRight to positive value of MOVEMENT_SPEED or 0 and updates the direction
-        ///accordingly to boolean value </summary>
-        ///<param name="val"> a boolean whether player should move or not </param>
+///<summary> Sets moveRight to positive value of MOVEMENT_SPEED or 0 and updates the direction
+///accordingly to boolean value </summary>
+///<param name="val"> a boolean whether player should move or not </param>
         private void SetMoveRight(bool val){
             if (val) {
                 moveRight = MOVEMENT_SPEED;
@@ -49,7 +49,7 @@ namespace Breakout {
                 UpdateDirection();
             }    
         }
-        ///<summary> Moves the player </summary>
+///<summary> Moves the player </summary>
         public void Move() {
             var x = shape.Position.X;
             if ((x + shape.Direction.X) <= (1.0f - shape.Extent.X) && 
@@ -57,24 +57,27 @@ namespace Breakout {
                 shape.Move();
             }
         }
-        ///<returns> X-position of player </returns>
+///<returns> X-position of player </returns>
         public Vec2F getPos() {
             return shape.Position;
         }
 
+///<returns> Extent of player in the X-axis </returns>
         public float getExtent() {
             return shape.Extent.X;
         }
 
+///<returns> Player's Shape </returns>
         public DynamicShape getShape() {
             return shape;
         }
 
+///<returns> Player's Entity </returns>
         public Entity getEntity(){
             return entity;
         }
-        ///<summary> Begins movement when left or right key is pressed by calling method. </summary>
-        ///<param name ="key"> argument is a given key-input as string </param>
+///<summary> Begins movement when left or right key is pressed by calling method. </summary>
+///<param name ="key"> argument is a given key-input as string </param>
         public void KeyPress(KeyboardKey key) {
             switch (key) {
                 case KeyboardKey.Left:
@@ -87,8 +90,8 @@ namespace Breakout {
                     break;
             }
         }
-        ///<summary> stops movement or closes the game </summary>
-        ///<param name="key"> string as a key on the keyboard </param>
+///<summary> stops movement or closes the game </summary>
+///<param name="key"> string as a key on the keyboard </param>
         public void KeyRelease(KeyboardKey key) {
             switch (key) {
                 case KeyboardKey.Left:

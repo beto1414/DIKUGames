@@ -11,7 +11,9 @@ namespace Breakout.PowerUps{
         public HalfSpeed(Vec2F Position) : 
             base(Position, new Image(Path.Combine(FileIO.GetProjectPath(),Path.Combine("Assets", "Images", "HalfSpeedPowerUp.png")))) {
         }
-
+///<summary>
+///Reduces the ball speed by a half amount.
+///</summary>
         public override void Activate() {
             BreakoutBus.GetBus().RegisterEvent(new GameEvent {
                 EventType = GameEventType.TimedEvent,

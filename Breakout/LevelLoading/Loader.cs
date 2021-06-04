@@ -21,6 +21,13 @@ namespace Breakout.LevelLoading {
         public static MetaReader normMeta = new MetaReader("                  ");
         public static float Time;
 
+///<summary> Method is in charge of reading and parsing level-files.
+/// File.ReadAllLines reads the file. 
+///SplitArray() dissects the level into relevant sub-portions. 
+///AssignChar ,Meta and -LevelTimer overwrites listOfLegends and listOfMeta which contain
+///relevant information of legends and meta-data and Time.
+///</summary>
+///<param name="file"> string containing the path of a .txt level-file </param>.
         public static void Reader(string file) {
                 string path = Path.Combine(FileIO.GetProjectPath(),file);
                 level = File.ReadAllLines(path);
@@ -32,12 +39,6 @@ namespace Breakout.LevelLoading {
                 LevelTimer();
 
         }
-        public static void Printer(string[] list){
-            foreach(var item in list){
-                Console.WriteLine(item.ToString());
-            }
-        }
-
 
 ///<summary>
 ///Isolates a string array out of a bigger string array using indexes
@@ -75,12 +76,25 @@ namespace Breakout.LevelLoading {
                 listOfLegends.Add(new LegendReader(item));
             }
         }
+///<summary>
+///Adds a MetaReader-instance to the listOfMeta list for each line in given argument.
+///Each MetaReader contains one of three:
+///1. blockName(string), blockType(enum), blockChar(char)
+///2. Name(string)
+///3. Time(int)
+///</summary>
+///<param name="line">
+///A string array containing meta-data
+///</param>
         public static void AssignMeta(string[] line) {
             listofMeta = new List<MetaReader>();
             foreach(var item in line) {
                 listofMeta.Add(new MetaReader(item));
             }
         }
+///<summary>
+///Adds a value to the field Loader.Time if such information exists in the level-data.
+///</summary>
         public static void LevelTimer() {
             foreach(var item in listofMeta) {
                 if (item.Time > 0.00001f) {
@@ -89,6 +103,14 @@ namespace Breakout.LevelLoading {
             }
         }
 
+///<summary>
+///Method iterates through the x and y-axis of the screen, adding block-entities corresponding to 
+///the characters of the given level. Each block is instantiated based on what character is found 
+///and what legends and meta-data are relevant to the given level.
+///</summary>
+///<returns>
+///Returns an entity container with blocks corresponding to the level which was loaded.
+///</returns>
         public static EntityContainer<Block> DrawMap() {
             normMeta.blockType = BlockType.Normal;
             blocks.ClearContainer();
@@ -105,7 +127,16 @@ namespace Breakout.LevelLoading {
             }
             return blocks;
         }
-
+///<summary>
+///Method utilized in MetaReader.charToBlock(method) which returns a blockImage if character is found in any of
+///the items of listOfLegends. Method is also a fail-safe to make sure all characters in a level as recognized and
+/// assigned to an image.
+///</summary>
+///<param name="c"> argument is a character, used in a pattern-matching fashion to find matches in the listOfLegends.
+///</param>
+///<returns>
+///Returns a string with an image-path corresponding to the character argument.
+///</returns>
         public static string CharToFile(char c) {
             foreach(LegendReader item in listOfLegends) {
                 if (item.character == c) {
@@ -119,8 +150,7 @@ namespace Breakout.LevelLoading {
 ///Finds the MetaReader containing the char c (argument) and returns it. If not found, makes a dummy MetaReader
 ///containing the char c and the BlockType BlockType.Normal
 ///</summary>
-///<param name="c"> 
-///a char. Supposedly a char assigned to a MetaReader in listofMeta by Reader()
+///<param name="c"> a char. Supposedly a char assigned to a MetaReader in listofMeta by Reader()
 ///</param>
 ///<returns>
 ///a MetaReader from listofMeta if param is found, else a dummy MetaReader

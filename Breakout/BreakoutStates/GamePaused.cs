@@ -84,6 +84,9 @@ namespace Breakout.BreakoutStates {
             menuButtons[1].SetColor(System.Drawing.Color.White);
         }
 
+///<summary>
+///returns this class' instance. If the class is not instancilized, make a new instance
+///</summary>
         public static GamePaused GetInstance () {
             return GamePaused.instance ?? (GamePaused.instance = new GamePaused());
         }

@@ -11,6 +11,9 @@ namespace Breakout.Blocks {
             blockValue = 0;
         }
 
+///<summary>
+///Block is indestuctable and does not take damage
+///</summary>
         public override void Hit() {
             
         } 

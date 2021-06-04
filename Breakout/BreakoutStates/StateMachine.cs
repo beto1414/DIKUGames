@@ -14,6 +14,13 @@ namespace Breakout.BreakoutStates {
             rand = new Random();
             ActiveState = MainMenu.GetInstance();
         }
+
+///<summary>
+///Switches the active state to a given state
+///</summary>
+///<param name="stateType">
+///A GameStateType enum that tells which state should be switched to
+///</param>
         private void SwitchState(GameStateType stateType){
             switch (stateType) {
                 case GameStateType.GameRunning:

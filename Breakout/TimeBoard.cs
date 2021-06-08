@@ -16,7 +16,7 @@ namespace Breakout {
 ///Method sets the field "secondsLeft" with a float argument
 ///</summary>
 ///<param name="sec"> float argument
-///</param> 
+///</param>
         public void SetTimer (float sec) {
             secondsLeft = sec;
         }

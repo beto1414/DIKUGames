@@ -10,32 +10,32 @@ using DIKUArcade.Utilities;
 
 
 namespace Breakout.LevelLoading {
-    public static class Loader {
+    public static class CreateLevel {
         public static String[] level = new String[]{};
         public static String[] map = new String[]{}; 
         public static String[] metadata = new String[]{};
         public static String[] legend = new String[]{};
-        public static List<LegendReader> listOfLegends = new List<LegendReader>();
-        public static List<MetaReader> listofMeta = new List<MetaReader> ();
+        public static List<LegendData> listOfLegends = new List<LegendData>();
+        public static List<MetaData> listofMeta = new List<MetaData> ();
         public static EntityContainer<Block> blocks = new EntityContainer<Block> ();
-        public static MetaReader normMeta = new MetaReader("                  ");
+        public static MetaData normMeta = new MetaData("                  ");
         public static float Time;
 
 ///<summary> Method is in charge of reading and parsing level-files.
 /// File.ReadAllLines reads the file. 
 ///SplitArray() dissects the level into relevant sub-portions. 
-///AssignChar ,Meta and -LevelTimer overwrites listOfLegends and listOfMeta which contain
+///ReadLegendData ,Meta and -LevelTimer overwrites listOfLegends and listOfMeta which contain
 ///relevant information of legends and meta-data and Time.
 ///</summary>
 ///<param name="file"> string containing the path of a .txt level-file </param>.
-        public static void Reader(string file) {
+        public static void ReadLevelFile(string file) {
                 string path = Path.Combine(FileIO.GetProjectPath(),file);
                 level = File.ReadAllLines(path);
                 map = SplitArray(level,"Map:","Map/");
                 metadata = SplitArray(level,"Meta:","Meta/");
                 legend = SplitArray(level,"Legend:","Legend/");
-                AssignChar(legend);
-                AssignMeta(metadata);
+                ReadLegendData(legend);
+                ReadMetaData(metadata);
                 LevelTimer();
 
         }
@@ -62,23 +62,23 @@ namespace Breakout.LevelLoading {
                 throw new ArgumentException("404 text not found");
             }
         }
-        
+
 ///<summary>
-///Adds a LegendReader-instance to the listOfLegends list for each line in given argument.
-///Each LegendReader contains a char and a string (filename)
+///Adds a LegendData-instance to the listOfLegends list for each line in given argument.
+///Each LegendData contains a char and a string (filename)
 ///</summary>
 ///<param name="leg">
 ///A string array containing legends
 ///</param>
-        public static void AssignChar(string[] leg) {
-            listOfLegends = new List<LegendReader>();
+        public static void ReadLegendData(string[] leg) {
+            listOfLegends = new List<LegendData>();
             foreach(var item in leg){
-                listOfLegends.Add(new LegendReader(item));
+                listOfLegends.Add(new LegendData(item));
             }
         }
 ///<summary>
-///Adds a MetaReader-instance to the listOfMeta list for each line in given argument.
-///Each MetaReader contains one of three:
+///Adds a MetaData-instance to the listOfMeta list for each line in given argument.
+///Each MetaData contains one of three:
 ///1. blockName(string), blockType(enum), blockChar(char)
 ///2. Name(string)
 ///3. Time(int)
@@ -86,14 +86,14 @@ namespace Breakout.LevelLoading {
 ///<param name="line">
 ///A string array containing meta-data
 ///</param>
-        public static void AssignMeta(string[] line) {
-            listofMeta = new List<MetaReader>();
+        public static void ReadMetaData(string[] line) {
+            listofMeta = new List<MetaData>();
             foreach(var item in line) {
-                listofMeta.Add(new MetaReader(item));
+                listofMeta.Add(new MetaData(item));
             }
         }
 ///<summary>
-///Adds a value to the field Loader.Time if such information exists in the level-data.
+///Adds a value to the field CreateLevel.Time if such information exists in the level-data.
 ///</summary>
         public static void LevelTimer() {
             foreach(var item in listofMeta) {
@@ -120,7 +120,7 @@ namespace Breakout.LevelLoading {
                 string temp = map[i];
                 for(int j = 0; j < 11; j++) {
                     if(temp[j] != '-') {
-                        var tempMeta = CharToMetaReader(temp[j]);
+                        var tempMeta = CharToMetaData(temp[j]);
                         blocks.AddEntity(tempMeta.charToBlock(new Vec2F(positionVarX*j, 1.0f-(positionVarY*i))));
                     }
                 }
@@ -128,7 +128,7 @@ namespace Breakout.LevelLoading {
             return blocks;
         }
 ///<summary>
-///Method utilized in MetaReader.charToBlock(method) which returns a blockImage if character is found in any of
+///Method utilized in MetaData.charToBlock(method) which returns a blockImage if character is found in any of
 ///the items of listOfLegends. Method is also a fail-safe to make sure all characters in a level as recognized and
 /// assigned to an image.
 ///</summary>
@@ -138,7 +138,7 @@ namespace Breakout.LevelLoading {
 ///Returns a string with an image-path corresponding to the character argument.
 ///</returns>
         public static string CharToFile(char c) {
-            foreach(LegendReader item in listOfLegends) {
+            foreach(LegendData item in listOfLegends) {
                 if (item.character == c) {
                     return item.blockImage;
                 }
@@ -147,16 +147,16 @@ namespace Breakout.LevelLoading {
         }
 
 ///<summary>
-///Finds the MetaReader containing the char c (argument) and returns it. If not found, makes a dummy MetaReader
+///Finds the MetaData containing the char c (argument) and returns it. If not found, makes a dummy MetaData
 ///containing the char c and the BlockType BlockType.Normal
 ///</summary>
-///<param name="c"> a char. Supposedly a char assigned to a MetaReader in listofMeta by Reader()
+///<param name="c"> a char. Supposedly a char assigned to a MetaData in listofMeta by ReadLevelFile()
 ///</param>
 ///<returns>
-///a MetaReader from listofMeta if param is found, else a dummy MetaReader
+///a MetaData from listofMeta if param is found, else a dummy MetaData
 ///</returns>
-        public static MetaReader CharToMetaReader(char c) {
-            foreach(MetaReader item in listofMeta) {
+        public static MetaData CharToMetaData(char c) {
+            foreach(MetaData item in listofMeta) {
                 if (item.blockChar == c) {
                     return item;
                 }

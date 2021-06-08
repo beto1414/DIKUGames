@@ -24,8 +24,8 @@ namespace BreakoutTests.EntityTests {
             winArgs = new WindowArgs(); 
             newGame = new Game(winArgs);
             state = new GameRunning();
-            Loader.Reader(Path.Combine("Assets","Levels","level1.txt"));
-            state.blocks = Loader.DrawMap();
+            CreateLevel.ReadLevelFile(Path.Combine("Assets","Levels","level1.txt"));
+            state.blocks = CreateLevel.DrawMap();
         }
 
         [Test]

@@ -5,13 +5,13 @@ using DIKUArcade.Graphics;
 using DIKUArcade.Math;
 using DIKUArcade.Entities;
 namespace Breakout.LevelLoading {
-    public class MetaReader {
+    public class MetaData {
         public string Name;
         public BlockType blockType;
         public int Time;
         public string blockName;
         public char blockChar;
-        public MetaReader(string line) {
+        public MetaData(string line) {
             switch (line[0..4]) {
                 case "Name":
                     Name = line[6..line.Length];
@@ -43,7 +43,7 @@ namespace Breakout.LevelLoading {
         }
 ///<summary>
 ///The method returns a block object after pattern-matching through what type the block is.
-//Loader.CharToFile is a helper function which indentifies what image the specific block has.
+//CreateLevel.CharToFile is a helper function which indentifies what image the specific block has.
 ///</summary>
 ///<param name="position"> Vec2F containing a position on the screen.
 ///</param>
@@ -54,16 +54,16 @@ namespace Breakout.LevelLoading {
             switch (blockType) {
                 case BlockType.Unbreakable :
                     return new Unbreakable(new StationaryShape(position, new Vec2F(0.08f, 0.03f)), 
-                        new Image(Path.Combine("Assets","Images",Loader.CharToFile(blockChar))));
+                        new Image(Path.Combine("Assets","Images",CreateLevel.CharToFile(blockChar))));
                 case BlockType.Invisible :
                     return new Invisible(new StationaryShape(position, new Vec2F(0.08f, 0.03f)), 
-                        new Image(Path.Combine("Assets","Images",Loader.CharToFile(blockChar))));
+                        new Image(Path.Combine("Assets","Images",CreateLevel.CharToFile(blockChar))));
                 case BlockType.PowerUpBlock :
                     return new PowerUpBlock(new StationaryShape(position, new Vec2F(0.08f, 0.03f)), 
-                        new Image(Path.Combine("Assets","Images",Loader.CharToFile(blockChar))));
+                        new Image(Path.Combine("Assets","Images",CreateLevel.CharToFile(blockChar))));
                 default:
                     return new Normal(new StationaryShape(position, new Vec2F(0.08f, 0.03f)), 
-                        new Image(Path.Combine("Assets","Images",Loader.CharToFile(blockChar))));
+                        new Image(Path.Combine("Assets","Images",CreateLevel.CharToFile(blockChar))));
             }
         }
     }

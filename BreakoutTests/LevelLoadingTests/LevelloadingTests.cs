@@ -24,8 +24,8 @@ namespace BreakoutTests.LevelLoadingTests {
         }
         [Test]
         public void MetaTest_0() {
-            Loader.Reader(Path.Combine("Assets","Levels","level1.txt"));
-            Assert.AreEqual(Loader.listofMeta.Count, 3);
+            CreateLevel.ReadLevelFile(Path.Combine("Assets","Levels","level1.txt"));
+            Assert.AreEqual(CreateLevel.listofMeta.Count, 3);
         }
         
         [Test]
@@ -33,27 +33,27 @@ namespace BreakoutTests.LevelLoadingTests {
             intList = new int[] {1,1,3,3,4,1};
             int counter = 0;
             foreach (var item in levelNames) {
-                Loader.Reader(item);
-                Assert.AreEqual(Loader.listofMeta.Count,intList[counter]);
+                CreateLevel.ReadLevelFile(item);
+                Assert.AreEqual(CreateLevel.listofMeta.Count,intList[counter]);
                 counter++;
             }
         }
         [Test]
-        public void TestReaderMeta() {
-            Loader.Reader(levelNames[2]);
-            Assert.IsTrue(Loader.metadata[0] == "Name: LEVEL 1");
+        public void TestReadLevelFileMeta() {
+            CreateLevel.ReadLevelFile(levelNames[2]);
+            Assert.IsTrue(CreateLevel.metadata[0] == "Name: LEVEL 1");
         }
 
         [Test]
-        public void TestReaderMap() {
-            Loader.Reader(levelNames[2]);
-            Assert.IsTrue(Loader.map[4] == "-111----111-");
+        public void TestReadLevelFileMap() {
+            CreateLevel.ReadLevelFile(levelNames[2]);
+            Assert.IsTrue(CreateLevel.map[4] == "-111----111-");
         }
 
         [Test]
-        public void TestReaderLegends() {
-            Loader.Reader(levelNames[2]);
-            Assert.IsTrue(Loader.legend[3] == "q) darkgreen-block.png");
+        public void TestReadLevelFileLegends() {
+            CreateLevel.ReadLevelFile(levelNames[2]);
+            Assert.IsTrue(CreateLevel.legend[3] == "q) darkgreen-block.png");
         }
     }    
 }

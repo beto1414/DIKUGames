@@ -25,7 +25,7 @@ namespace Breakout.BreakoutStates {
         private ScoreBoard scoreBoard;
         public static LivesLeft livesLeft;
         public TimeBoard timeBoard {get; private set;}
-        public MetaReader normalBlock;
+        public MetaData normalBlock;
         public static string[] levels = new String[]{"level1.txt","level2.txt","level3.txt","level4.txt"};
         public int counter = 0;
         public Random rand;
@@ -43,8 +43,8 @@ namespace Breakout.BreakoutStates {
             counter = 0;
             infiniteMode = false;
             Ball.MOVEMENT_SPEED = 0.015f;
-            Loader.Reader(Path.Combine("Assets","Levels",levels[counter]));
-            blocks = Loader.DrawMap();
+            CreateLevel.ReadLevelFile(Path.Combine("Assets","Levels",levels[counter]));
+            blocks = CreateLevel.DrawMap();
             powerUps.ClearContainer();
             rand = new Random();
             backGroundImage = new Entity(
@@ -59,8 +59,8 @@ namespace Breakout.BreakoutStates {
             livesLeft = new LivesLeft("Lives left: ",new Vec2F(0.0f,0.1f), new Vec2F(0.4f,0.4f));
             timeBoard = new TimeBoard("Time left: ",new Vec2F(0.0f,0.2f), new Vec2F(0.4f,0.4f));
             StaticTimer.RestartTimer();
-            if (Loader.Time > 0.00001){
-                timeBoard.SetTimer(Loader.Time);
+            if (CreateLevel.Time > 0.00001){
+                timeBoard.SetTimer(CreateLevel.Time);
                 timeBoard.levelHasTimer = true;
             } else {
                 timeBoard.levelHasTimer = false;
@@ -83,10 +83,10 @@ namespace Breakout.BreakoutStates {
                     balls.ClearContainer();
                     balls.AddEntity(new Ball(new Vec2F(0.5f, 0.1f),new Vec2F(-0.02f,0.01f)));
                     foreach(Ball x in balls) {x.AlignSpeed();}
-                    Loader.Reader(Path.Combine("Assets","Levels",levels[counter]));
-                    blocks = Loader.DrawMap();
-                    if (Loader.Time > 0.00001){
-                        timeBoard.SetTimer(Loader.Time);
+                    CreateLevel.ReadLevelFile(Path.Combine("Assets","Levels",levels[counter]));
+                    blocks = CreateLevel.DrawMap();
+                    if (CreateLevel.Time > 0.00001){
+                        timeBoard.SetTimer(CreateLevel.Time);
                         timeBoard.levelHasTimer = true;
                     }
                 } else {
@@ -159,10 +159,10 @@ namespace Breakout.BreakoutStates {
                             balls.ClearContainer();
                             balls.AddEntity(new Ball(new Vec2F(0.5f, 0.1f),new Vec2F(-0.02f,0.01f)));
                             foreach(Ball x in balls) {x.AlignSpeed();}
-                            Loader.Reader(Path.Combine("Assets","Levels",levels[counter]));
-                            blocks = Loader.DrawMap();
-                            if (Loader.Time > 0.00001){
-                                timeBoard.SetTimer(Loader.Time);
+                            CreateLevel.ReadLevelFile(Path.Combine("Assets","Levels",levels[counter]));
+                            blocks = CreateLevel.DrawMap();
+                            if (CreateLevel.Time > 0.00001){
+                                timeBoard.SetTimer(CreateLevel.Time);
                                 timeBoard.levelHasTimer = true;
                             } else {
                                 timeBoard.levelHasTimer = false;

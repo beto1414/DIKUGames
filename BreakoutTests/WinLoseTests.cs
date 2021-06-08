@@ -74,10 +74,10 @@ namespace BreakoutTests.EntityTests {
         var counter = 0;
         var levels = new String[]{"level1.txt","level2.txt","level3.txt"};
         foreach (float i in level) {
-            Loader.Reader(Path.Combine(FileIO.GetProjectPath(),Path.Combine("Assets","Levels",levels[counter])));
-            state.blocks = Loader.DrawMap();
-            if (Loader.Time > 0.00001){
-                state.timeBoard.SetTimer(Loader.Time);
+            CreateLevel.ReadLevelFile(Path.Combine(FileIO.GetProjectPath(),Path.Combine("Assets","Levels",levels[counter])));
+            state.blocks = CreateLevel.DrawMap();
+            if (CreateLevel.Time > 0.00001){
+                state.timeBoard.SetTimer(CreateLevel.Time);
                 state.timeBoard.levelHasTimer = true;}
             if (counter < 3) {counter++;}
             Console.WriteLine(state.timeBoard.secondsLeft);
